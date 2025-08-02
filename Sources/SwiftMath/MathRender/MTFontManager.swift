@@ -1,4 +1,3 @@
-
 //
 //  Created by Mike Griebling on 2022-12-31.
 //  Translated from an Objective-C implementation by Kostub Deshmukh.
@@ -88,8 +87,43 @@ public class MTFontManager {
     public var defaultFont: MTFont? {
         MTFontManager.fontManager.latinModernFont(withSize: kDefaultFontSize)
     }
-
-
-
-
+    
+    // --- PERFORMANCE OPTIMIZATION: Font Preloading and Initialization ---
+    
+    /// Preload commonly used fonts to eliminate cold-start penalty
+    public static func preloadCommonFonts() {
+        let commonSizes: [CGFloat] = [12, 14, 16, 18, 20, 22, 24, 28, 32, 36]
+        let fontManager = MTFontManager.fontManager
+        let fontLoaders: [(CGFloat) -> MTFont?] = [
+            fontManager.termesFont,
+            fontManager.latinModernFont,
+            fontManager.kpMathLightFont,
+            fontManager.kpMathSansFont,
+            fontManager.xitsFont,
+            fontManager.asanaFont,
+            fontManager.eulerFont,
+            fontManager.firaRegularFont,
+            fontManager.notoSansRegularFont,
+            fontManager.libertinusRegularFont,
+            fontManager.garamondMathFont,
+            fontManager.leteSansFont
+        ]
+        
+        for size in commonSizes {
+            autoreleasepool {
+                for loader in fontLoaders {
+                    _ = loader(size)
+                }
+            }
+        }
+        print("SwiftMath: Preloaded fonts for sizes \(commonSizes)")
+    }
+    
+    /// Initialize all font caches during app startup
+    public static func initializeFontSystem() {
+        preloadCommonFonts()
+        // Optionally force initialization of font manager internal state
+        let _ = MTFontManager.fontManager.termesFont(withSize: 20)
+        print("SwiftMath: Font system initialized")
+    }
 }
