@@ -116,14 +116,14 @@ public class MTFontManager {
                 }
             }
         }
-        print("SwiftMath: Preloaded fonts for sizes \(commonSizes)")
+        //print("SwiftMath: Preloaded fonts for sizes \(commonSizes)")
     }
     
     /// Initialize all font caches during app startup
     public static func initializeFontSystem() {
         preloadCommonFonts()
         // Optionally force initialization of font manager internal state
-        let _ = MTFontManager.fontManager.termesFont(withSize: 20)
-        print("SwiftMath: Font system initialized")
+        let _ = MTFontManager.fontManager.xitsFont(withSize: 20)
+        //print("SwiftMath: Font system initialized")
     }
 }
