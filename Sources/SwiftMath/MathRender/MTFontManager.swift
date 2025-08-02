@@ -10,7 +10,7 @@
 import Foundation
 
 public class MTFontManager {
-    
+        
     static public private(set) var manager: MTFontManager = {
         MTFontManager()
     }()
@@ -88,6 +88,8 @@ public class MTFontManager {
     public var defaultFont: MTFont? {
         MTFontManager.fontManager.latinModernFont(withSize: kDefaultFontSize)
     }
+
+
 
 
 }
