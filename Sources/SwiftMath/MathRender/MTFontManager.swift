@@ -97,16 +97,16 @@ public class MTFontManager {
         let fontLoaders: [(CGFloat) -> MTFont?] = [
             fontManager.termesFont,
             fontManager.latinModernFont,
-            fontManager.kpMathLightFont,
-            fontManager.kpMathSansFont,
+         //   fontManager.kpMathLightFont,
+          //  fontManager.kpMathSansFont,
             fontManager.xitsFont,
-            fontManager.asanaFont,
-            fontManager.eulerFont,
-            fontManager.firaRegularFont,
-            fontManager.notoSansRegularFont,
-            fontManager.libertinusRegularFont,
-            fontManager.garamondMathFont,
-            fontManager.leteSansFont
+          //  fontManager.asanaFont,
+          //  fontManager.eulerFont,
+          //  fontManager.firaRegularFont,
+          //  fontManager.notoSansRegularFont,
+          //  fontManager.libertinusRegularFont,
+          //  fontManager.garamondMathFont,
+          //  fontManager.leteSansFont
         ]
         
         for size in commonSizes {
