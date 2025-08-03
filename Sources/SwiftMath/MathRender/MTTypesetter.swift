@@ -467,7 +467,13 @@ class MTTypesetter {
         // convert to a list of DisplayAtoms
         var prevNode:MTMathAtom? = nil
         var lastType:MTMathAtomType!
+        //By Alpha
+        var colorLastAtomType : MTMathAtomType? = nil
+        //By Alpha
         for atom in preprocessed {
+            //By Alpha
+            colorLastAtomType = nil
+            //By Alpha
             switch atom.type {
                 case .number, .variable,. unaryOperator:
                     // These should never appear as they should have been removed by preprocessing
@@ -508,6 +514,27 @@ class MTTypesetter {
                     let colorAtom = atom as! MTMathColor
                     let display = MTTypesetter.createLineForMathList(colorAtom.innerList, font: font, style: style)
                     display!.localTextColor = MTColor(fromHexString: colorAtom.colorString)
+                    //By Alpha
+                    var type = MTMathAtomType.ordinary
+                    if let innerList = colorAtom.innerList, !innerList.atoms.isEmpty {
+                        type = innerList.atoms[0].type
+                        colorLastAtomType = innerList.atoms.last!.type
+                    }
+                    if prevNode != nil {
+                        let interElementSpace = self.getInterElementSpace(prevNode!.type, right: type )
+                        if currentLine.length > 0 {
+                            if interElementSpace > 0 {
+                                // add a kerning of that space to the previous character
+                                currentLine.addAttribute(kCTKernAttributeName as NSAttributedString.Key,
+                                                         value:NSNumber(floatLiteral: interElementSpace),
+                                                         range:currentLine.mutableString.rangeOfComposedCharacterSequence(at: currentLine.length-1))
+                            }
+                        } else {
+                            // increase the space
+                            currentPosition.x += interElementSpace
+                        }
+                    }
+                    //By Alpha
                     display!.position = currentPosition
                     currentPosition.x += display!.width
                     displayAtoms.append(display!)
@@ -518,29 +545,21 @@ class MTTypesetter {
                         self.addDisplayLine()
                     }
                     let colorAtom = atom as! MTMathTextColor
-                    //By Alpha
-                    var type = MTMathAtomType.ordinary
-                    if let atom = colorAtom.innerList?.atoms[0] {
-                        type = atom.type
-                    }
-                    
-                    //By Alpha
                     let display = MTTypesetter.createLineForMathList(colorAtom.innerList, font: font, style: style)
                     display!.localTextColor = MTColor(fromHexString: colorAtom.colorString)
-
+                    //By Alpha
+                    var type = MTMathAtomType.ordinary
+                    if let innerList = colorAtom.innerList, !innerList.atoms.isEmpty {
+                        type = innerList.atoms[0].type
+                        colorLastAtomType = innerList.atoms.last!.type
+                    }
+                    //By Alpha
                     if prevNode != nil {
+                        //By Alpha
                         let interElementSpace = self.getInterElementSpace(prevNode!.type, right: type )
+                        //By Alpha
                         //let subDisplay: MTDisplay = display!.subDisplays[0]
                         //let subDisplayAtom = (subDisplay as? MTCTLineDisplay)!.atoms[0]
-                        // let interElementSpace = self.getInterElementSpace(prevNode!.type, right:subDisplayAtom.type)
-//                        var interElementSpace : CGFloat = 0
-//                        if let subDisplayAtom = (subDisplay as? MTCTLineDisplay)?.atoms[0] {
-//                            interElementSpace = self.getInterElementSpace(prevNode!.type, right:subDisplayAtom.type)
-//
-//                        } else {
-//                            interElementSpace = self.getInterElementSpace(prevNode!.type, right: .ordinary)
-//                        }
-//                                               
                         if currentLine.length > 0 {
                             if interElementSpace > 0 {
                                 // add a kerning of that space to the previous character
@@ -565,8 +584,29 @@ class MTTypesetter {
                     }
                     let colorboxAtom =  atom as! MTMathColorbox
                     let display = MTTypesetter.createLineForMathList(colorboxAtom.innerList, font:font, style:style)
-                    
                     display!.localBackgroundColor = MTColor(fromHexString: colorboxAtom.colorString)
+                    //By Alpha
+                    var type = MTMathAtomType.ordinary
+                    if let innerList = colorboxAtom.innerList, !innerList.atoms.isEmpty {
+                        type = innerList.atoms[0].type
+                        colorLastAtomType = innerList.atoms.last!.type
+                    }
+                    if prevNode != nil {
+                        let interElementSpace = self.getInterElementSpace(prevNode!.type, right: type )
+                        if currentLine.length > 0 {
+                            if interElementSpace > 0 {
+                                // add a kerning of that space to the previous character
+                                currentLine.addAttribute(kCTKernAttributeName as NSAttributedString.Key,
+                                                         value:NSNumber(floatLiteral: interElementSpace),
+                                                         range:currentLine.mutableString.rangeOfComposedCharacterSequence(at: currentLine.length-1))
+                            }
+                        } else {
+                            // increase the space
+                            currentPosition.x += interElementSpace
+                        }
+                    }
+                    //By Alpha
+
                     display!.position = currentPosition
                     currentPosition.x += display!.width;
                     displayAtoms.append(display!)
@@ -770,6 +810,11 @@ class MTTypesetter {
                     }
             } // switch
             lastType = atom.type
+            //By Alpha
+            if let type = colorLastAtomType {
+                lastType = type
+            }
+            //By Alpha
             prevNode = atom
         } // node loop
         if currentLine.length > 0 {
