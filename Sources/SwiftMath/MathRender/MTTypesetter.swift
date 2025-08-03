@@ -523,8 +523,16 @@ class MTTypesetter {
 
                     if prevNode != nil {
                         let subDisplay: MTDisplay = display!.subDisplays[0]
-                        let subDisplayAtom = (subDisplay as? MTCTLineDisplay)!.atoms[0]
-                        let interElementSpace = self.getInterElementSpace(prevNode!.type, right:subDisplayAtom.type)
+                        //let subDisplayAtom = (subDisplay as? MTCTLineDisplay)!.atoms[0]
+                        // let interElementSpace = self.getInterElementSpace(prevNode!.type, right:subDisplayAtom.type)
+                        var interElementSpace : CGFloat = 0
+                        if let subDisplayAtom = (subDisplay as? MTCTLineDisplay)?.atoms[0] {
+                            interElementSpace = self.getInterElementSpace(prevNode!.type, right:subDisplayAtom.type)
+
+                        } else {
+                            interElementSpace = self.getInterElementSpace(prevNode!.type, right: .ordinary)
+                        }
+                                               
                         if currentLine.length > 0 {
                             if interElementSpace > 0 {
                                 // add a kerning of that space to the previous character
