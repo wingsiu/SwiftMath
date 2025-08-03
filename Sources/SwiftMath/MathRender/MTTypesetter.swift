@@ -1159,7 +1159,16 @@ class MTTypesetter {
         var glyphDisplay:MTDisplayDS?
         if glyphAscent + glyphDescent < radicalHeight {
             // the glyphs is not as large as required. A glyph needs to be constructed using the extenders.
-            glyphDisplay = self.constructGlyph(radicalGlyph, withHeight:radicalHeight)
+            //glyphDisplay = self.constructGlyph(radicalGlyph, withHeight:radicalHeight)
+            //By Alpha
+            glyphDisplay = MTGlyphDisplay(withGlpyh: glyph, range: NSMakeRange(NSNotFound, 0), font:styleFont)
+            let deltaY = radicalHeight - glyphAscent - glyphDescent
+            let deltaX = deltaY / (3075/542)
+            glyphDisplay!.ascent = deltaY + glyphAscent
+            glyphDisplay!.descent = glyphDescent
+            glyphDisplay!.width = glyphWidth+deltaX
+            //By Alpha
+            
         }
         
         if glyphDisplay == nil {
