@@ -493,7 +493,7 @@ class MTRadicalDisplay : MTDisplay {
         let lineStart = CGPointMake(_radicalGlyph!.width, self.ascent - heightFromTop - self.lineThickness / 2); // subtract half the line thickness to center the line
         //By Alpha
         if let glyphDS = _radicalGlyph as? MTDisplayDS, let extenderPosition = glyphDS.extenderPosition {
-            let start = CGPointMake(extenderPosition.x, 0)
+            let start = CGPointMake(extenderPosition.x, extenderPosition.y)
             path.move(to: start)
             path.addLine(to: lineStart)
             path.lineWidth = lineThickness
