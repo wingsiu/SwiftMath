@@ -517,7 +517,9 @@ class MTTypesetter {
                     //By Alpha
                     var type = MTMathAtomType.ordinary
                     if let innerList = colorAtom.innerList, !innerList.atoms.isEmpty {
-                        type = innerList.atoms[0].type
+                        if let firstNonStyleAtom = innerList.atoms.first(where: { $0.type != .style }) {
+                                type = firstNonStyleAtom.type
+                        }
                         colorLastAtomType = innerList.atoms.last!.type
                     }
                     if prevNode != nil {
@@ -550,7 +552,9 @@ class MTTypesetter {
                     //By Alpha
                     var type = MTMathAtomType.ordinary
                     if let innerList = colorAtom.innerList, !innerList.atoms.isEmpty {
-                        type = innerList.atoms[0].type
+                        if let firstNonStyleAtom = innerList.atoms.first(where: { $0.type != .style }) {
+                                type = firstNonStyleAtom.type
+                        }
                         colorLastAtomType = innerList.atoms.last!.type
                     }
                     //By Alpha
@@ -588,7 +592,9 @@ class MTTypesetter {
                     //By Alpha
                     var type = MTMathAtomType.ordinary
                     if let innerList = colorboxAtom.innerList, !innerList.atoms.isEmpty {
-                        type = innerList.atoms[0].type
+                        if let firstNonStyleAtom = innerList.atoms.first(where: { $0.type != .style }) {
+                                type = firstNonStyleAtom.type
+                        }
                         colorLastAtomType = innerList.atoms.last!.type
                     }
                     if prevNode != nil {
