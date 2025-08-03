@@ -1167,7 +1167,7 @@ class MTTypesetter {
             glyphDisplay!.ascent = deltaY + glyphAscent
             glyphDisplay!.descent = glyphDescent
             glyphDisplay!.width = glyphWidth+deltaX
-            glyphDisplay!.extenderPosition = CGPoint(x: glyphWidth, y: glyphAscent)
+            glyphDisplay!.extenderPosition = CGPoint(x: glyphWidth, y: deltaY)
             //By Alpha
             
         }
