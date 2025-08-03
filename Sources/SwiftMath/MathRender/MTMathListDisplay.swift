@@ -107,6 +107,9 @@ public class MTDisplay:NSObject {
 class MTDisplayDS : MTDisplay, DownShift {
     
     var shiftDown: CGFloat = 0
+    //By Alpha
+    var extenderPosition : CGPoint?
+    //By Alpha
     
 }
 
@@ -488,12 +491,23 @@ class MTRadicalDisplay : MTDisplay {
         // draw the horizontal line with the given thickness
         let path = MTBezierPath()
         let lineStart = CGPointMake(_radicalGlyph!.width, self.ascent - heightFromTop - self.lineThickness / 2); // subtract half the line thickness to center the line
+        //By Alpha
+        if let glyphDS = _radicalGlyph as? MTDisplayDS, let extenderPosition = glyphDS.extenderPosition {
+            let start = extenderPosition
+            path.move(to: start)
+            path.addLine(to: lineStart)
+            path.lineWidth = lineThickness
+            path.lineCapStyle = .round
+            path.stroke()
+        }
+        //By Alpha
         let lineEnd = CGPointMake(lineStart.x + self.radicand!.width, lineStart.y);
         path.move(to: lineStart)
         path.addLine(to: lineEnd)
         path.lineWidth = lineThickness
         path.lineCapStyle = .round
         path.stroke()
+        
 
         context.restoreGState();
     }
