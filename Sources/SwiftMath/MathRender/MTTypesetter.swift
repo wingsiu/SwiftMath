@@ -1650,7 +1650,10 @@ class MTTypesetter {
     // MARK: - Table
     
     let kBaseLineSkipMultiplier = CGFloat(1.2)  // default base line stretch is 12 pt for 10pt font.
-    let kLineSkipMultiplier = CGFloat(0.1)  // default is 1pt for 10pt font.
+//    let kLineSkipMultiplier = CGFloat(0.1)  // default is 1pt for 10pt font.
+//By Alpha
+    let kLineSkipMultiplier = CGFloat(0.3)  // default is 1pt for 10pt font.
+//By Alpha
     let kLineSkipLimitMultiplier = CGFloat(0)
     let kJotMultiplier = CGFloat(0.3) // A jot is 3pt for a 10pt font.
     
