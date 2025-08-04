@@ -614,43 +614,62 @@ public class MTMathAtomFactory {
      All other characters, including those with accents, will have a non-nil atom returned.
      */
     public static func atom(forCharacter ch: Character) -> MTMathAtom? {
+        
+        
         let chStr = String(ch)
-        switch chStr {
-            case "\u{0410}"..."\u{044F}":
-				// Cyrillic alphabet
-                return MTMathAtom(type: .ordinary, value: chStr)
-			case _ where supportedAccentedCharacters.keys.contains(ch):
-				// support for áéíóúýàèìòùâêîôûäëïöüÿãñõçøåæœß'ÁÉÍÓÚÝÀÈÌÒÙÂÊÎÔÛÄËÏÖÜÃÑÕÇØÅÆŒ
-				return atom(fromAccentedCharacter: ch)
-            case _ where ch.utf32Char < 0x0021 || ch.utf32Char > 0x007E:
-                return nil
-            case "$", "%", "#", "&", "~", "\'", "^", "_", "{", "}", "\\":
-                return nil
-            case "(", "[":
-                return MTMathAtom(type: .open, value: chStr)
-            case ")", "]", "!", "?":
-                return MTMathAtom(type: .close, value: chStr)
-            case ",", ";":
-                return MTMathAtom(type: .punctuation, value: chStr)
-            case "=", ">", "<":
-                return MTMathAtom(type: .relation, value: chStr)
-            case ":":
-                // Math colon is ratio. Regular colon is \colon
-                return MTMathAtom(type: .relation, value: "\u{2236}")
-            case "-":
-                return MTMathAtom(type: .binaryOperator, value: "\u{2212}")
-            case "+", "*":
-                return MTMathAtom(type: .binaryOperator, value: chStr)
-            case ".", "0"..."9":
-                return MTMathAtom(type: .number, value: chStr)
-            case "a"..."z", "A"..."Z":
+        //By Alpha
+        let atomCharacterSet = CharacterSet(charactersIn: UnicodeScalar(0x21)!...UnicodeScalar(0x7E)!)
+        if chStr.rangeOfCharacter(from: atomCharacterSet) != nil {
+        //By alpha
+            switch chStr {
+                case "\u{0410}"..."\u{044F}":
+                    // Cyrillic alphabet
+                    return MTMathAtom(type: .ordinary, value: chStr)
+                case _ where supportedAccentedCharacters.keys.contains(ch):
+                    // support for áéíóúýàèìòùâêîôûäëïöüÿãñõçøåæœß'ÁÉÍÓÚÝÀÈÌÒÙÂÊÎÔÛÄËÏÖÜÃÑÕÇØÅÆŒ
+                    return atom(fromAccentedCharacter: ch)
+                case _ where ch.utf32Char < 0x0021 || ch.utf32Char > 0x007E:
+                    return nil
+                case "$", "%", "#", "&", "~", "\'", "^", "_", "{", "}", "\\":
+                    return nil
+                case "(", "[":
+                    return MTMathAtom(type: .open, value: chStr)
+                case ")", "]", "!", "?":
+                    return MTMathAtom(type: .close, value: chStr)
+                case ",", ";":
+                    return MTMathAtom(type: .punctuation, value: chStr)
+                case "=", ">", "<":
+                    return MTMathAtom(type: .relation, value: chStr)
+                case ":":
+                    // Math colon is ratio. Regular colon is \colon
+                    return MTMathAtom(type: .relation, value: "\u{2236}")
+                case "-":
+                    return MTMathAtom(type: .binaryOperator, value: "\u{2212}")
+                case "+", "*":
+                    return MTMathAtom(type: .binaryOperator, value: chStr)
+                case ".", "0"..."9":
+                    return MTMathAtom(type: .number, value: chStr)
+                case "a"..."z", "A"..."Z":
+                    return MTMathAtom(type: .variable, value: chStr)
+                case "\"", "/", "@", "`", "|":
+                    return MTMathAtom(type: .ordinary, value: chStr)
+                default:
+                    assertionFailure("Unknown ASCII character '\(ch)'. Should have been handled earlier.")
+                    return nil
+            }
+        //By Alpha
+        } else {
+            let chiCharacterSet = CharacterSet(charactersIn: UnicodeScalar(0x4E00)!...UnicodeScalar(0x9FFF)!)
+            if chStr.contains(where: {$0.isEmoji}) ||
+                chStr.rangeOfCharacter(from: chiCharacterSet) != nil
+                {
                 return MTMathAtom(type: .variable, value: chStr)
-            case "\"", "/", "@", "`", "|":
-                return MTMathAtom(type: .ordinary, value: chStr)
-            default:
-                assertionFailure("Unknown ASCII character '\(ch)'. Should have been handled earlier.")
-                return nil
+            }
+            // skip non ascii characters and spaces
+            return nil
         }
+        
+        //By Alpha
     }
     
     /** Returns a `MTMathList` with one atom per character in the given string. This function

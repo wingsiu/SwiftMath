@@ -67,23 +67,65 @@ extension Character {
     var isLowerEnglish : Bool { self >= "a" && self <= "z" }
     var isUpperEnglish : Bool { self >= "A" && self <= "Z" }
     var isNumber : Bool { self >= "0" && self <= "9" }
-
+    
     var isLowerGreek : Bool {
         let uch = self.utf32Char
         return uch >= UnicodeSymbol.lowerGreekStart && uch <= UnicodeSymbol.lowerGreekEnd
     }
-
+    
     var isCapitalGreek : Bool {
         let uch = self.utf32Char
         return uch >= UnicodeSymbol.capitalGreekStart && uch <= UnicodeSymbol.capitalGreekEnd
     }
-
+    
     var greekSymbolOrder : UInt32? {
         let greekSymbols : [UTF32Char] = [0x03F5, 0x03D1, 0x03F0, 0x03D5, 0x03F1, 0x03D6]
         let index = greekSymbols.firstIndex(of: self.utf32Char)
         if let pos = index { return UInt32(pos) }
         return nil
     }
-
+    
     var isGreekSymbol : Bool { self.greekSymbolOrder != nil }
+    
+//By Alpha
+    /// A simple emoji is one scalar and presented to the user as an Emoji
+    var isSimpleEmoji: Bool {
+        guard let firstScalar = unicodeScalars.first else { return false }
+        return firstScalar.properties.isEmoji && firstScalar.value > 0x238C
+    }
+
+    var isLowerEn: Bool {
+        guard let firstScalar = unicodeScalars.first else { return false }
+        return firstScalar >= "a" && firstScalar <= "z"
+    }
+
+    var isUpperEn: Bool {
+        guard let firstScalar = unicodeScalars.first else { return false }
+        return firstScalar >= "A" && firstScalar <= "Z"
+    }
+    
+    var isUpperGreek: Bool {
+        guard let firstScalar = unicodeScalars.first else { return false }
+        return firstScalar >= "\u{0391}" && firstScalar <= "\u{03A9}"
+    }
+    
+    var value : UTF32Char {
+        guard let firstScalar = unicodeScalars.first else { return 0 }
+        return firstScalar.value
+    }
+
+    
+    /// Checks if the scalars will be merged into an emoji
+    var isCombinedIntoEmoji: Bool { unicodeScalars.count > 1 && unicodeScalars.first?.properties.isEmoji ?? false }
+
+    var isEmoji: Bool { isSimpleEmoji || isCombinedIntoEmoji }
+
+//By Alpha
+}
+
+extension Character {
+    
+
+    
+
 }
