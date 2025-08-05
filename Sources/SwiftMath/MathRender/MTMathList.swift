@@ -787,7 +787,7 @@ public class MTMathTable: MTMathAtom {
         return table
     }
     
-    init(environment: String?) {
+    public init(environment: String?) {
         super.init()
         self.type = .table
         self.environment = environment ?? ""
