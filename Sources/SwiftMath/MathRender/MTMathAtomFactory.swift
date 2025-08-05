@@ -962,8 +962,8 @@ public class MTMathAtomFactory {
     /// Factory method for colorbox (\colorbox)
     /// You need a background color atom implementation. For now, you can use the same class.
     /// If you want to distinguish, define a subclass or add a flag.
-    public static func colorBox(withName name: String, innerList: MTMathList) -> MTMathColor {
-        let colorBoxAtom = MTMathColor()
+    public static func colorBox(withName name: String, innerList: MTMathList) -> MTMathColorbox {
+        let colorBoxAtom = MTMathColorbox()
         colorBoxAtom.colorString = name
         colorBoxAtom.innerList = innerList
         // Optionally: add a property `isColorBox: Bool` to MTMathColor to distinguish.
