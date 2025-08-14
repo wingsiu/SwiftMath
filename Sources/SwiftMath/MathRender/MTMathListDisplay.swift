@@ -53,10 +53,11 @@ public class MTDisplay:NSObject {
     }
     
     /// Gets the bounding rectangle for the MTDisplay
-    //func displayBounds() -> CGRect {
-    public func displayBounds() -> CGRect { //By Alpha
+    func displayBounds() -> CGRect {
+    //public func displayBounds() -> CGRect { //By Alpha
         CGRectMake(self.position.x, self.position.y - self.descent, self.width, self.ascent + self.descent)
     }
+    
     
     /// For debugging. Shows the object in quick look in Xcode.
 #if os(iOS) || os(visionOS)
@@ -265,6 +266,7 @@ public class MTMathListDisplay : MTDisplay {
     }
 
     func recomputeDimensions() {
+        print("compute dimensions: \(self.subDisplays)")
         var max_ascent:CGFloat = 0
         var max_descent:CGFloat = 0
         var max_width:CGFloat = 0
