@@ -983,6 +983,10 @@ public class MTMathList : NSObject {
         if self.isAtomAllowed(atom) {
             // NSIndexException(self.atoms, index: index)
             self.atoms.insert(atom, at: index)
+            
+            // Update index ranges of subsequent atoms
+            let insertedLength = atom.indexRange.length > 0 ? atom.indexRange.length : 1
+            updateIndexRanges(from: index + 1, offset: insertedLength)
         } else {
             NSException(name: NSExceptionName(rawValue: "Error"), reason: "Cannot add atom of type \(atom.type.rawValue) into mathlist").raise()
         }
@@ -992,13 +996,30 @@ public class MTMathList : NSObject {
     /// - parameter list: The list to append.
     public func append(_ list: MTMathList?) {
         guard let list = list else { return }
+        let oldCount = self.atoms.count
         self.atoms += list.atoms
+        
+        // Update index ranges of appended atoms based on the current list's end position
+        if oldCount > 0 && !self.atoms.isEmpty {
+            let lastAtom = self.atoms[oldCount - 1]
+            let baseOffset = lastAtom.indexRange.location + lastAtom.indexRange.length
+            
+            // Update each appended atom's index range
+            for i in oldCount..<self.atoms.count {
+                let atom = self.atoms[i]
+                let originalLocation = atom.indexRange.location
+                atom.indexRange.location = baseOffset + originalLocation
+                updateNestedIndexRanges(in: atom, offset: baseOffset)
+            }
+        }
     }
     
     /** Removes the last atom from the math list. If there are no atoms in the list this does nothing. */
     public func removeLastAtom() {
         if !self.atoms.isEmpty {
+            let removedAtom = self.atoms.last!
             self.atoms.removeLast()
+            // No need to update index ranges since we're removing from the end
         }
     }
     
@@ -1007,15 +1028,100 @@ public class MTMathList : NSObject {
     /// in the list.
     public func removeAtom(at index: Int) {
         NSIndexException(self.atoms, index:index)
+        let removedAtom = self.atoms[index]
         self.atoms.remove(at: index)
+        
+        // Update index ranges of subsequent atoms
+        let removedLength = removedAtom.indexRange.length > 0 ? removedAtom.indexRange.length : 1
+        updateIndexRanges(from: index, offset: -removedLength)
     }
     
     /** Removes all the atoms within the given range. */
     public func removeAtoms(in range: ClosedRange<Int>) {
         NSIndexException(self.atoms, index: range.lowerBound)
         NSIndexException(self.atoms, index: range.upperBound)
+        
+        // Calculate total length of atoms being removed
+        var totalRemovedLength = 0
+        for i in range {
+            let atom = self.atoms[i]
+            totalRemovedLength += atom.indexRange.length > 0 ? atom.indexRange.length : 1
+        }
+        
         self.atoms.removeSubrange(range)
+        
+        // Update index ranges of subsequent atoms
+        updateIndexRanges(from: range.lowerBound, offset: -totalRemovedLength)
     }
     
     func isAtomAllowed(_ atom: MTMathAtom?) -> Bool { atom?.type != .boundary }
+    
+    /// Updates the indexRange of all atoms starting from the given index by adding the specified offset.
+    /// This method also recursively updates nested structures like fractions, superscripts, subscripts, etc.
+    /// - parameter startIndex: The index from which to start updating
+    /// - parameter offset: The offset to add to the indexRange.location of each atom
+    public func updateIndexRanges(from startIndex: Int, offset: Int) {
+        // Only proceed if there's an actual offset to apply
+        guard offset != 0 && startIndex < atoms.count else { return }
+        
+        // Update atoms from startIndex onwards
+        for i in startIndex..<atoms.count {
+            let atom = atoms[i]
+            atom.indexRange.location += offset
+            
+            // Recursively update nested structures
+            updateNestedIndexRanges(in: atom, offset: offset)
+        }
+    }
+    
+    /// Helper method to recursively update indexRange in nested MTMathList structures
+    /// - parameter atom: The atom containing potential nested structures
+    /// - parameter offset: The offset to apply to nested structures
+    private func updateNestedIndexRanges(in atom: MTMathAtom, offset: Int) {
+        // Update superscript
+        atom.superScript?.updateIndexRanges(from: 0, offset: offset)
+        
+        // Update subscript
+        atom.subScript?.updateIndexRanges(from: 0, offset: offset)
+        
+        // Handle specific atom types with nested structures
+        switch atom.type {
+        case .fraction:
+            if let fraction = atom as? MTFraction {
+                fraction.numerator?.updateIndexRanges(from: 0, offset: offset)
+                fraction.denominator?.updateIndexRanges(from: 0, offset: offset)
+            }
+        case .radical:
+            if let radical = atom as? MTRadical {
+                radical.radicand?.updateIndexRanges(from: 0, offset: offset)
+                radical.degree?.updateIndexRanges(from: 0, offset: offset)
+            }
+        case .inner:
+            if let inner = atom as? MTInner {
+                inner.innerList?.updateIndexRanges(from: 0, offset: offset)
+            }
+        case .accent:
+            if let accent = atom as? MTAccent {
+                accent.innerList?.updateIndexRanges(from: 0, offset: offset)
+            }
+        case .underline:
+            if let underline = atom as? MTUnderLine {
+                underline.innerList?.updateIndexRanges(from: 0, offset: offset)
+            }
+        case .overline:
+            if let overline = atom as? MTOverLine {
+                overline.innerList?.updateIndexRanges(from: 0, offset: offset)
+            }
+        case .table:
+            if let table = atom as? MTMathTable {
+                for row in table.cells {
+                    for cell in row {
+                        cell.updateIndexRanges(from: 0, offset: offset)
+                    }
+                }
+            }
+        default:
+            break
+        }
+    }
 }
