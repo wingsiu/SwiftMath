@@ -101,7 +101,8 @@ public class MTMathAtomFactory {
         "check" :  "\u{030C}",
         "vec" :  "\u{20D7}",
         "widehat" :  "\u{0302}",
-        "widetilde" :  "\u{0303}"
+        "widetilde" :  "\u{0303}",
+        "arc" : "\u{23DC}" //By Alpha
     ]
     
     private static let accentValueLock = NSLock()
