@@ -266,11 +266,12 @@ public class MTMathListDisplay : MTDisplay {
     }
 
     func recomputeDimensions() {
-        print("compute dimensions: \(self.subDisplays)")
+        
         var max_ascent:CGFloat = 0
         var max_descent:CGFloat = 0
         var max_width:CGFloat = 0
         for atom in self.subDisplays {
+            print("recomputeDimensions: \(atom.displayBounds())")
             let ascent = max(0, atom.position.y + atom.ascent);
             if (ascent > max_ascent) {
                 max_ascent = ascent;
