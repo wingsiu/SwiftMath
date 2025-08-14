@@ -53,7 +53,8 @@ public class MTDisplay:NSObject {
     }
     
     /// Gets the bounding rectangle for the MTDisplay
-    func displayBounds() -> CGRect {
+    //func displayBounds() -> CGRect {
+    public func displayBounds() -> CGRect { //By Alpha
         CGRectMake(self.position.x, self.position.y - self.descent, self.width, self.ascent + self.descent)
     }
     
