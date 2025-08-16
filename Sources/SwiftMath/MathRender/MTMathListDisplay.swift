@@ -271,7 +271,7 @@ public class MTMathListDisplay : MTDisplay {
         var max_descent:CGFloat = 0
         var max_width:CGFloat = 0
         for atom in self.subDisplays {
-            print("recomputeDimensions \(atom.range): \(atom.displayBounds())")
+            //print("recomputeDimensions \(atom.range): \(atom.displayBounds())")
             let ascent = max(0, atom.position.y + atom.ascent);
             if (ascent > max_ascent) {
                 max_ascent = ascent;
