@@ -391,7 +391,8 @@ public class MTFractionDisplay : MTDisplay {
 // MARK: - MTRadicalDisplay
 
 /// Rendering of an MTRadical as an MTDisplay
-class MTRadicalDisplay : MTDisplay {
+//class MTRadicalDisplay : MTDisplay {
+public class MTRadicalDisplay : MTDisplay {//By Alpha
     
     /** A display representing the radicand of the radical. Its position is relative
      to the parent is not treated as a sub-display.
