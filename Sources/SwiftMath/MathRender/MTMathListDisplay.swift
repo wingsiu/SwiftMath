@@ -347,7 +347,8 @@ public class MTFractionDisplay : MTDisplay {
         numerator!.position = CGPointMake(self.position.x + (self.width - numerator!.width)/2, self.position.y + self.numeratorUp)
     }
 
-    override var position: CGPoint {
+//    override var position: CGPoint {
+    public override var position: CGPoint { //By Alpha
         set {
             super.position = newValue
             self.updateDenominatorPosition()
@@ -404,7 +405,8 @@ public class MTRadicalDisplay : MTDisplay {//By Alpha
      */
     public fileprivate(set) var degree:MTMathListDisplay?
     
-    override var position: CGPoint {
+    //override var position: CGPoint {
+    public override var position: CGPoint {//By Alpha
         set {
             super.position = newValue
             self.updateRadicandPosition()
@@ -679,7 +681,8 @@ public class MTLargeOpLimitsDisplay : MTDisplay {//By Alpha
         }
     }
     
-    override var position: CGPoint {
+    //override var position: CGPoint {
+    public override var position: CGPoint {//By Alpha
         set {
             super.position = newValue
             self.updateLowerLimitPosition()
@@ -832,7 +835,8 @@ public class MTAccentDisplay : MTDisplay {//By Alpha
         get { super.textColor }
     }
 
-    override var position: CGPoint {
+    //override var position: CGPoint {
+    public override var position: CGPoint {//By alpha
         set {
             super.position = newValue
             self.updateAccenteePosition()
