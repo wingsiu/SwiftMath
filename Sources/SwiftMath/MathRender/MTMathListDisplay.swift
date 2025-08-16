@@ -624,11 +624,13 @@ public class MTLargeOpLimitsDisplay : MTDisplay {//By Alpha
     /** A display representing the upper limit of the large operator. Its position is relative
      to the parent is not treated as a sub-display.
      */
-    var upperLimit:MTMathListDisplay?
+    //var upperLimit:MTMathListDisplay?
+    public var upperLimit:MTMathListDisplay? //By Alpha
     /** A display representing the lower limit of the large operator. Its position is relative
      to the parent is not treated as a sub-display.
      */
-    var lowerLimit:MTMathListDisplay?
+    //var lowerLimit:MTMathListDisplay?
+    public var lowerLimit:MTMathListDisplay? //By Alpha
     
     var limitShift:CGFloat=0
     var upperLimitGap:CGFloat=0 { didSet { self.updateUpperLimitPosition() } }
