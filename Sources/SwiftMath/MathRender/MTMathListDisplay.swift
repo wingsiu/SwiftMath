@@ -618,8 +618,9 @@ class MTGlyphConstructionDisplay:MTDisplayDS {
 // MARK: - MTLargeOpLimitsDisplay
 
 /// Rendering a large operator with limits as an MTDisplay
-class MTLargeOpLimitsDisplay : MTDisplay {
-    
+//class MTLargeOpLimitsDisplay : MTDisplay {
+public class MTLargeOpLimitsDisplay : MTDisplay {//By Alpha
+
     /** A display representing the upper limit of the large operator. Its position is relative
      to the parent is not treated as a sub-display.
      */
@@ -651,8 +652,9 @@ class MTLargeOpLimitsDisplay : MTDisplay {
         self.extraPadding = extraPadding;  // corresponds to \xi_13 in TeX
         self.width = maxWidth;
     }
-
-    override var ascent:CGFloat {
+    
+    //override var ascent:CGFloat {
+    public override var ascent:CGFloat {//By Alpha
         set { super.ascent = newValue }
         get {
             if self.upperLimit != nil {
@@ -662,8 +664,8 @@ class MTLargeOpLimitsDisplay : MTDisplay {
             }
         }
     }
-
-    override var descent:CGFloat {
+    //override var descent:CGFloat {
+    public override var descent:CGFloat {//By Alpha
         set { super.descent = newValue }
         get {
             if self.lowerLimit != nil {
@@ -721,7 +723,8 @@ class MTLargeOpLimitsDisplay : MTDisplay {
         get { super.textColor }
     }
 
-    override func draw(_ context:CGContext) {
+    //override func draw(_ context:CGContext) {
+    public override func draw(_ context:CGContext) {//By Alpha
         super.draw(context)
         // Draw the elements.
         self.upperLimit?.draw(context)
@@ -802,7 +805,8 @@ public class MTAccentDisplay : MTDisplay {//By Alpha
     /** A display representing the inner list that is accented. Its position is relative
      to the parent is not treated as a sub-display.
      */
-    var accentee:MTMathListDisplay?
+    //var accentee:MTMathListDisplay?
+    public var accentee:MTMathListDisplay? //By Alpha
     
     /** A display representing the accent. Its position is relative to the current display.
      */
