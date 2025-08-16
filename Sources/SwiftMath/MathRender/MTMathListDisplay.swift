@@ -796,7 +796,8 @@ class MTLineDisplay : MTDisplay {
 // MARK: - MTAccentDisplay
 
 /// Rendering an accent as a display
-class MTAccentDisplay : MTDisplay {
+//class MTAccentDisplay : MTDisplay {
+public class MTAccentDisplay : MTDisplay {//By Alpha
     
     /** A display representing the inner list that is accented. Its position is relative
      to the parent is not treated as a sub-display.
@@ -836,7 +837,8 @@ class MTAccentDisplay : MTDisplay {
         self.accentee?.position = CGPointMake(self.position.x, self.position.y);
     }
 
-    override func draw(_ context:CGContext) {
+    //override func draw(_ context:CGContext)
+    public override func draw(_ context:CGContext) {//By Alpha
         super.draw(context)
         self.accentee?.draw(context)
 
