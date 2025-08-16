@@ -91,7 +91,8 @@ public class MTDisplay:NSObject {
     /// The width of the display
     public var width:CGFloat = 0
     /// Position of the display with respect to the parent view or display.
-    var position = CGPoint.zero
+    //var position = CGPoint.zero
+    public var position = CGPoint.zero //By alpha
     /// The range of characters supported by this item
     public var range:NSRange=NSMakeRange(0, 0)
     /// Whether the display has a subscript/superscript following it.
