@@ -125,7 +125,8 @@ public class MTCTLineDisplay : MTDisplay {
     public var line:CTLine!
     /// The attributed string used to generate the CTLineRef. Note setting this does not reset the dimensions of
     /// the display. So set only when
-    var attributedString:NSAttributedString? {
+    //var attributedString:NSAttributedString? {
+    public var attributedString:NSAttributedString? { //By Alpha
         didSet {
             line = CTLineCreateWithAttributedString(attributedString!)
         }
