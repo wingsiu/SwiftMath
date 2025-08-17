@@ -58,7 +58,7 @@ public class MTMathListIndex {
     public var subIndexType: MTMathListSubIndexType = .none //By Alpha
     
     /// The index into the sublist.
-    var subIndex: MTMathListIndex?
+    public var subIndex: MTMathListIndex?
     
     var finalIndex: Int {
         if self.subIndexType == .none {
