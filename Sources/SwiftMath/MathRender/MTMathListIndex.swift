@@ -53,7 +53,8 @@ public class MTMathListIndex {
     var atomIndex: Int
     
     /// The type of subindex, e.g. superscript, numerator etc.
-    var subIndexType: MTMathListSubIndexType = .none
+    //var subIndexType: MTMathListSubIndexType = .none
+    var subIndexType: MTMathListSubIndexType = .none //By Alpha
     
     /// The index into the sublist.
     var subIndex: MTMathListIndex?
