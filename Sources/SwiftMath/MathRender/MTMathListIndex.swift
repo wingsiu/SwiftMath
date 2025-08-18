@@ -47,6 +47,45 @@ public class MTMathListIndex {
         case radicand
         /// The subindex indexes into the degree (only valid for radicals)
         case degree
+        /// By alph
+        /// The subindex indexes into the accent
+        /// A placeholder square for future input. Does not exist in TeX
+        case placeholder
+        /// An inner atom, i.e. an embedded math list - Inner in TeX
+        case inner
+        /// An underlined atom - Under in TeX
+        case underline
+        /// An overlined atom - Over in TeX
+        case overline
+        /// An accented atom - Accent in TeX
+        case accent
+        
+        // Atoms after this point do not support subscripts or superscripts
+        
+        /// A left atom - Left & Right in TeX. We don't need two since we track boundaries separately.
+        case boundary = 101
+        
+        // Atoms after this are non-math TeX nodes that are still useful in math mode. They do not have
+        // the usual structure.
+        
+        /// Spacing between math atoms. This denotes both glue and kern for TeX. We do not
+        /// distinguish between glue and kern.
+        case space = 201
+        
+        /// Denotes style changes during rendering.
+        case style
+        case color
+        case textcolor
+        case colorBox
+        
+        // Atoms after this point are not part of TeX and do not have the usual structure.
+        
+        /// An table atom. This atom does not exist in TeX. It is equivalent to the TeX command
+        /// halign which is handled outside of the TeX math rendering engine. We bring it into our
+        /// math typesetting to handle matrices and other tables.
+        case table = 1001
+
+        ///By alpha
     }
     
     /// The index of the associated atom.
