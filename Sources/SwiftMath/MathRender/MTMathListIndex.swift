@@ -35,6 +35,8 @@ public class MTMathListIndex {
         case none  = 0
         /// The position in the subindex is an index into the nucleus
         case nucleus
+        /// /// A large operator such as (sin/cos, integral etc.) - Op in TeX
+        case largeOperator  //By Alpha
         /// The subindex indexes into the superscript.
         case superscript
         /// The subindex indexes into the subscript
@@ -47,7 +49,7 @@ public class MTMathListIndex {
         case radicand
         /// The subindex indexes into the degree (only valid for radicals)
         case degree
-        /// By alph
+        /// By alpha
         /// The subindex indexes into the accent
         /// A placeholder square for future input. Does not exist in TeX
         case placeholder
