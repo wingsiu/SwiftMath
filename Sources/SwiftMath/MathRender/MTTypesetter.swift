@@ -348,7 +348,8 @@ func getBboxDetails(_ bbox:CGRect, ascent:inout CGFloat, descent:inout CGFloat) 
 
 // MARK: - MTTypesetter
 
-class MTTypesetter {
+//class MTTypesetter {
+public class MTTypesetter {//By Alpha
     var font:MTFont!
     var displayAtoms = [MTDisplay]()
     var currentPosition = CGPoint.zero
