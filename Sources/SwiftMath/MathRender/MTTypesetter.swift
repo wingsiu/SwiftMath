@@ -687,6 +687,7 @@ public class MTTypesetter {//By Alpha
                     } else {
                         display = MTTypesetter.createLineForMathList(inner!.innerList, font:font, style:style, cramped:cramped)
                     }
+                    display!.range = inner!.indexRange //By Alpha
                     display!.position = currentPosition
                     currentPosition.x += display!.width
                     displayAtoms.append(display!)
