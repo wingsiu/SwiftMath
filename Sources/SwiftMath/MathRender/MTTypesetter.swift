@@ -520,12 +520,14 @@ public class MTTypesetter {//By Alpha
                     let display = MTTypesetter.createLineForMathList(colorAtom.innerList, font: font, style: style)
                     display!.localTextColor = MTColor(fromHexString: colorAtom.colorString)
                     //By Alpha
+                    display!.range = colorAtom.indexRange
                     var type = MTMathAtomType.ordinary
                     if let innerList = colorAtom.innerList, !innerList.atoms.isEmpty {
                         if let firstNonStyleAtom = innerList.atoms.first(where: { $0.type != .style }), firstNonStyleAtom.type != .radical, firstNonStyleAtom.type != .number,  firstNonStyleAtom.type != .variable , firstNonStyleAtom.type != .unaryOperator {
                                 type = firstNonStyleAtom.type
                         }
                         colorLastAtomType = innerList.atoms.last!.type
+                        
                     }
                     if prevNode != nil {
                         let interElementSpace = self.getInterElementSpace(prevNode!.type, right: type )
