@@ -1531,7 +1531,8 @@ public class MTTypesetter {//By Alpha
     
     // MARK: - Accents
     
-    func isSingleCharAccentee(_ accent:MTAccent?) -> Bool {
+    //func isSingleCharAccentee(_ accent:MTAccent?) -> Bool {
+    public func isSingleCharAccentee(_ accent:MTAccent?) -> Bool {//By Alpha
         guard let accent = accent else { return false }
         if accent.innerList!.atoms.count != 1 {
             // Not a single char list.
