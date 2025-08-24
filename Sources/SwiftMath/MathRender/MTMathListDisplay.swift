@@ -237,8 +237,9 @@ public class MTMathListDisplay : MTDisplay {
         self.recomputeDimensions()
     }
   
-    override var textColor: MTColor? {
-        set {
+    //override var textColor: MTColor? {
+    override public var textColor: MTColor? {//By Alpha
+            set {
             super.textColor = newValue
             for displayAtom in self.subDisplays {
                 if displayAtom.localTextColor == nil {
