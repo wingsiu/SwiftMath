@@ -100,6 +100,7 @@ public class MTMathAtomFactory {
         "ddot" :  "\u{0308}",
         "check" :  "\u{030C}",
         "vec" :  "\u{20D7}",
+        "overrightarrow" : "\u{20D7}", //By Alpha
         "widehat" :  "\u{0302}",
         "widetilde" :  "\u{0303}",
         "arc" : "\u{23DC}" //By Alpha
