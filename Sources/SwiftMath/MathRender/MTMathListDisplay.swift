@@ -113,19 +113,19 @@ public class MTDisplay:NSObject {
     
     // MARK: - MTDisplay Extensions
     //By Alpha
-    func closestIndex(to point: CGPoint) -> MTMathListIndex? {
+    public func closestIndex(to point: CGPoint) -> MTMathListIndex? {
         return nil
     }
     
-    func caretPosition(for index: MTMathListIndex) -> CGPoint {
+    public func caretPosition(for index: MTMathListIndex) -> CGPoint {
         return kInvalidPosition
     }
     
-    func highlightCharacter(at index: MTMathListIndex, color: UIColor) {
+    public func highlightCharacter(at index: MTMathListIndex, color: UIColor) {
         // No-op
     }
     
-    func highlight(with color: UIColor) {
+    public func highlight(with color: UIColor) {
         // No-op
     }
     //By Alpha
