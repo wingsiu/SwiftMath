@@ -1289,7 +1289,7 @@ public class MTTypesetter {//By Alpha
             }
             var glyphs = [NSNumber](), offsets = [NSNumber]()
             var height:CGFloat=0
-            self.constructGlyphWithParts(parts, glyphHeight:glyphWidth*0.8, glyphs:&glyphs, offsets:&offsets, height:&height)
+            self.constructGlyphWithParts(parts, glyphHeight:glyphWidth, glyphs:&glyphs, offsets:&offsets, height:&height)
             var first = glyphs[0].uint16Value
             let width = CTFontGetAdvancesForGlyphs(styleFont.ctFont, .horizontal, &first, nil, 1);
             let display = MTGlyphConstructionDisplay(withGlyphs: glyphs, h_offsets: offsets, font: styleFont)
@@ -1653,7 +1653,8 @@ public class MTTypesetter {//By Alpha
         var accentPosition = CGPointMake(skew, height);
         var accentGlyphDisplay : MTDisplay =  MTGlyphDisplay(withGlpyh: accentGlyph, range: accent!.indexRange, font: styleFont)
         //By Alpha
-        if glyphWidth < accenteeWidth*0.8 {
+        print("skew:\(skew)")
+        if glyphWidth < accenteeWidth {
             if let display = constructGlyph(accentGlyph, withWidth: accenteeWidth) {
                 accentGlyphDisplay = display
                 accentPosition = CGPointMake(0, height)
