@@ -11,6 +11,10 @@ import QuartzCore
 import CoreText
 import SwiftUI
 
+// MARK: - Constants
+let kInvalidPosition = CGPoint(x: -1, y: -1)
+let kPixelDelta: CGFloat = 2
+
 func isIos6Supported() -> Bool {
     if !MTDisplay.initialized {
 #if os(iOS) || os(visionOS)
@@ -103,6 +107,24 @@ public class MTDisplay:NSObject {
     var localTextColor: MTColor?
     /// The background color for this display
     var localBackgroundColor: MTColor?
+    
+    // MARK: - MTDisplay Extensions
+    func closestIndex(to point: CGPoint) -> MTMathListIndex? {
+        return nil
+    }
+    
+    func caretPosition(for index: MTMathListIndex) -> CGPoint {
+        return kInvalidPosition
+    }
+    
+    func highlightCharacter(at index: MTMathListIndex, color: UIColor) {
+        // No-op
+    }
+    
+    func highlight(with color: UIColor) {
+        // No-op
+    }
+
     
 }
 
