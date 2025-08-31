@@ -1,10 +1,10 @@
-#!/usr/local/bin/python3
+#!/usr/bin/python
 import plistlib
 import sys
 from fontTools.ttLib import TTFont
 
 def usage(code):
-    print('Usage math_table_to_plist.py <fontfile> <plistfile>')
+    print 'Usage math_table_to_plist.py <fontfile> <plistfile>'
     sys.exit(code)
 
 def process_font(font_file, out_file):
@@ -15,6 +15,7 @@ def process_font(font_file, out_file):
     v_variants = get_v_variants(math_table)
     h_variants = get_h_variants(math_table)
     assembly = get_v_assembly(math_table)
+    h_assembly = get_h_assembly(math_table)
     accents = get_accent_attachments(math_table)
     pl = {
             "version" : "1.3",
@@ -23,10 +24,11 @@ def process_font(font_file, out_file):
             "h_variants" : h_variants,
             "italic" : italic_c,
             "accents" : accents,
-            "v_assembly" : assembly }
-    ofile = open(out_file, 'w+b')
-    plistlib.dump(pl, ofile)
-    ofile.close()
+            "v_assembly" : assembly,
+            "h_assembly" : h_assembly
+            
+    }
+    plistlib.writePlist(pl, out_file)
 
 def get_constants(math_table):
     constants = math_table.MathConstants
@@ -111,7 +113,7 @@ def get_italic_correction(math_table):
     count = italic.ItalicsCorrectionCount
     records = italic.ItalicsCorrection
     italic_dict = {}
-    for i in range(count):
+    for i in xrange(count):
         name = glyphs[i]
         record = records[i]
         if record.DeviceTable is not None:
@@ -131,7 +133,7 @@ def get_accent_attachments(math_table):
     count = attach.TopAccentAttachmentCount
     records = attach.TopAccentAttachment
     attach_dict = {}
-    for i in range(count):
+    for i in xrange(count):
         name = glyphs[i]
         record = records[i]
         if record.DeviceTable is not None:
@@ -145,7 +147,7 @@ def get_v_variants(math_table):
     vconstruction = variants.VertGlyphConstruction
     count = variants.VertGlyphCount
     variant_dict = {}
-    for i in range(count):
+    for i in xrange(count):
         name = vglyphs[i]
         record = vconstruction[i]
         glyph_variants = [x.VariantGlyph for x in
@@ -159,7 +161,7 @@ def get_h_variants(math_table):
     hconstruction = variants.HorizGlyphConstruction
     count = variants.HorizGlyphCount
     variant_dict = {}
-    for i in range(count):
+    for i in xrange(count):
         name = hglyphs[i]
         record = hconstruction[i]
         glyph_variants = [x.VariantGlyph for x in
@@ -173,7 +175,7 @@ def get_v_assembly(math_table):
     vconstruction = variants.VertGlyphConstruction
     count = variants.VertGlyphCount
     assembly_dict = {}
-    for i in range(count):
+    for i in xrange(count):
         name = vglyphs[i]
         record = vconstruction[i]
         assembly = record.GlyphAssembly
@@ -181,10 +183,30 @@ def get_v_assembly(math_table):
             # There is an assembly for this glyph
             italic = assembly.ItalicsCorrection.Value
             parts = [part_dict(part) for part in assembly.PartRecords]
-            assembly_dict[name] = { 
+            assembly_dict[name] = {
                     "italic" : assembly.ItalicsCorrection.Value,
                     "parts" : parts }
     return assembly_dict
+
+def get_h_assembly(math_table):
+    variants = math_table.MathVariants
+    hglyphs = variants.HorizGlyphCoverage.glyphs
+    hconstruction = variants.HorizGlyphConstruction
+    count = variants.HorizGlyphCount
+    assembly_dict = {}
+    for i in xrange(count):
+        name = hglyphs[i]
+        record = hconstruction[i]
+        assembly = record.GlyphAssembly
+        if assembly is not None:
+            # There is an assembly for this glyph
+            italic = assembly.ItalicsCorrection.Value
+            parts = [part_dict(part) for part in assembly.PartRecords]
+            assembly_dict[name] = {
+                    "italic" : assembly.ItalicsCorrection.Value,
+                    "parts" : parts }
+    return assembly_dict
+
 
 def part_dict(part):
     return {
@@ -196,7 +218,7 @@ def part_dict(part):
 
 def main():
     if len(sys.argv) != 3:
-        usage(1)        
+        usage(1)
     font_file = sys.argv[1]
     plist_file = sys.argv[2]
     process_font(font_file, plist_file)
