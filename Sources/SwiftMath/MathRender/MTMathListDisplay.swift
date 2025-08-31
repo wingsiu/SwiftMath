@@ -628,6 +628,22 @@ class MTGlyphConstructionDisplay:MTDisplayDS {
         self.font = font
         self.position = CGPoint.zero
     }
+
+    //By Alpha
+    init(withGlyphs glyphs:[NSNumber?], h_offsets:[NSNumber?], font:MTFont?) {
+        super.init()
+        assert(glyphs.count == h_offsets.count, "Glyphs and offsets need to match")
+        self.numGlyphs = glyphs.count;
+        self.glyphs = [CGGlyph](repeating: CGGlyph(), count: self.numGlyphs)  //malloc(sizeof(CGGlyph) * _numGlyphs);
+        self.positions = [CGPoint](repeating: CGPoint.zero, count: self.numGlyphs) //malloc(sizeof(CGPoint) * _numGlyphs);
+        for i in 0 ..< self.numGlyphs {
+            self.glyphs[i] = glyphs[i]!.uint16Value
+            self.positions[i] = CGPointMake(CGFloat(h_offsets[i]!.floatValue), 0)
+        }
+        self.font = font
+        self.position = CGPoint.zero
+    }
+    //By Alpha
     
     override public func draw(_ context: CGContext) {
         super.draw(context)
