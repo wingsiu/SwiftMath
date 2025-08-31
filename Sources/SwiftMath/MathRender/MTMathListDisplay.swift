@@ -12,8 +12,11 @@ import CoreText
 import SwiftUI
 
 // MARK: - Constants
-let kInvalidPosition = CGPoint(x: -1, y: -1)
-let kPixelDelta: CGFloat = 2
+//By Alpha
+public let kInvalidPosition = CGPoint(x: -1, y: -1)
+public let kPixelDelta: CGFloat = 2
+
+//By Alpha
 
 func isIos6Supported() -> Bool {
     if !MTDisplay.initialized {
@@ -109,6 +112,7 @@ public class MTDisplay:NSObject {
     var localBackgroundColor: MTColor?
     
     // MARK: - MTDisplay Extensions
+    //By Alpha
     func closestIndex(to point: CGPoint) -> MTMathListIndex? {
         return nil
     }
@@ -124,7 +128,7 @@ public class MTDisplay:NSObject {
     func highlight(with color: UIColor) {
         // No-op
     }
-
+    //By Alpha
     
 }
 
