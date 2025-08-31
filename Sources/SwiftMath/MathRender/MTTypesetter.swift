@@ -1650,12 +1650,13 @@ public class MTTypesetter {//By Alpha
         let delta = min(accentee!.ascent, styleFont.mathTable!.accentBaseHeight);
         let skew = self.getSkew(accent, accenteeWidth:accenteeWidth, accentGlyph:accentGlyph)
         let height = accentee!.ascent - delta;  // This is always positive since delta <= height.
-        let accentPosition = CGPointMake(skew, height);
+        var accentPosition = CGPointMake(skew, height);
         var accentGlyphDisplay : MTDisplay =  MTGlyphDisplay(withGlpyh: accentGlyph, range: accent!.indexRange, font: styleFont)
         //By Alpha
         if glyphWidth < accenteeWidth*0.8 {
             if let display = constructGlyph(accentGlyph, withWidth: accenteeWidth) {
                 accentGlyphDisplay = display
+                accentPosition = CGPointMake(0, height)
             }
         }
         accentGlyphDisplay.ascent = glyphAscent;
