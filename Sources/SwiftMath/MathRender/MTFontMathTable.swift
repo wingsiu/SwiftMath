@@ -282,12 +282,47 @@ class MTFontMathTable {
     var minConnectorOverlap:CGFloat { constantFromTable("MinConnectorOverlap") }
     
     let kVertAssembly = "v_assembly"
+    let kHorizAssembly = "h_assembly"
     let kAssemblyParts = "parts"
 
     /** Returns an array of the glyph parts to be used for constructing vertical variants
      of this glyph. If there is no glyph assembly defined, returns an empty array. */
     func getVerticalGlyphAssembly(forGlyph glyph:CGGlyph) -> [GlyphPart] {
         let assemblyTable = _mathTable[kVertAssembly] as! NSDictionary?
+        let glyphName = self.font?.get(nameForGlyph: glyph)
+        let assemblyInfo = assemblyTable![glyphName!] as! NSDictionary?
+        if assemblyInfo == nil {
+            // No vertical assembly defined for glyph
+            return []
+        }
+        let parts = assemblyInfo![kAssemblyParts] as! NSArray?
+        if parts == nil {
+            // parts should always have been defined, but if it isn't return nil
+            return []
+        }
+        var rv = [GlyphPart]()
+        for part in parts! {
+            let partInfo = part as! NSDictionary?
+            var part = GlyphPart()
+            let adv = partInfo!["advance"] as! NSNumber?
+            part.fullAdvance = self.fontUnitsToPt(adv!.intValue)
+            let end = partInfo!["endConnector"] as! NSNumber?
+            part.endConnectorLength = self.fontUnitsToPt(end!.intValue)
+            let start = partInfo!["startConnector"] as! NSNumber?
+            part.startConnectorLength = self.fontUnitsToPt(start!.intValue)
+            let ext = partInfo!["extender"] as! NSNumber?
+            part.isExtender = ext!.boolValue
+            let glyphName = partInfo!["glyph"] as! String?
+            part.glyph = self.font?.get(glyphWithName: glyphName!)
+            rv.append(part)
+        }
+        return rv
+    }
+
+    /** Returns an array of the glyph parts to be used for constructing vertical variants
+     of this glyph. If there is no glyph assembly defined, returns an empty array. */
+    func getHorizontalGlyphAssembly(forGlyph glyph:CGGlyph) -> [GlyphPart] {
+        let assemblyTable = _mathTable[kHorizAssembly] as! NSDictionary?
         let glyphName = self.font?.get(nameForGlyph: glyph)
         let assemblyInfo = assemblyTable![glyphName!] as! NSDictionary?
         if assemblyInfo == nil {

@@ -1281,6 +1281,29 @@ public class MTTypesetter {//By Alpha
         return display;
     }
     
+    //By Alpha
+    func constructGlyph(_ glyph:CGGlyph, withWidth glyphWidth:CGFloat) -> MTGlyphConstructionDisplay? {
+        if let parts = styleFont.mathTable?.getHorizontalGlyphAssembly(forGlyph: glyph) {
+            if parts.count == 0 {
+                return nil
+            }
+            var glyphs = [NSNumber](), offsets = [NSNumber]()
+            var height:CGFloat=0
+            self.constructGlyphWithParts(parts, glyphHeight:glyphWidth, glyphs:&glyphs, offsets:&offsets, height:&height)
+            var first = glyphs[0].uint16Value
+            let width = CTFontGetAdvancesForGlyphs(styleFont.ctFont, .horizontal, &first, nil, 1);
+            let display = MTGlyphConstructionDisplay(withGlyphs: glyphs, offsets: offsets, font: styleFont)
+            display.width = width;
+            display.ascent = height;
+            display.descent = 0;   // it's upto the rendering to adjust the display up or down.
+            return display;
+        } else {
+            return nil
+        }
+    }
+    //By Alpha
+
+        
     func constructGlyphWithParts(_ parts:[GlyphPart], glyphHeight:CGFloat, glyphs:inout [NSNumber], offsets:inout [NSNumber], height:inout CGFloat) {
         // Loop forever until the glyph height is valid
         for numExtenders in 0..<Int.max {
@@ -1628,11 +1651,18 @@ public class MTTypesetter {//By Alpha
         let skew = self.getSkew(accent, accenteeWidth:accenteeWidth, accentGlyph:accentGlyph)
         let height = accentee!.ascent - delta;  // This is always positive since delta <= height.
         let accentPosition = CGPointMake(skew, height);
-        let accentGlyphDisplay = MTGlyphDisplay(withGlpyh: accentGlyph, range: accent!.indexRange, font: styleFont)
+        var accentGlyphDisplay : MTDisplay =  MTGlyphDisplay(withGlpyh: accentGlyph, range: accent!.indexRange, font: styleFont)
+        //By Alpha
+        if glyphWidth < accenteeWidth*0.9 {
+            if let display = constructGlyph(accentGlyph, withWidth: accenteeWidth) {
+                accentGlyphDisplay = display
+            }
+        }
         accentGlyphDisplay.ascent = glyphAscent;
         accentGlyphDisplay.descent = glyphDescent;
         accentGlyphDisplay.width = glyphWidth;
         accentGlyphDisplay.position = accentPosition;
+        
 
         if self.isSingleCharAccentee(accent) && (accent!.subScript != nil || accent!.superScript != nil) {
             // Attach the super/subscripts to the accentee instead of the accent.

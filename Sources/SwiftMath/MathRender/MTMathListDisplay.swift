@@ -855,9 +855,11 @@ public class MTAccentDisplay : MTDisplay {//By Alpha
     
     /** A display representing the accent. Its position is relative to the current display.
      */
-    var accent:MTGlyphDisplay?
+    //var accent:MTGlyphDisplay?
+    var accent:MTDisplay?  //By Alpha
     
-    init(withAccent glyph:MTGlyphDisplay?, accentee:MTMathListDisplay?, range:NSRange) {
+//    init(withAccent glyph:MTGlyphDisplay?, accentee:MTMathListDisplay?, range:NSRange) {
+    init(withAccent glyph:MTDisplay?, accentee:MTMathListDisplay?, range:NSRange) {//By Alpha
         super.init()
         self.accent = glyph
         self.accentee = accentee

@@ -62,7 +62,7 @@ internal class MTFontMathTableV2: MTFontMathTable {
         
         var glyphArray = [NSNumber]()
         let variantGlyphs = variants[glyphName] as? NSArray
-
+        
         guard let variantGlyphs = variantGlyphs, variantGlyphs.count != .zero else {
             // There are no extra variants, so just add the current glyph to it.
             let glyph = font.get(glyphWithName: glyphName)
@@ -83,9 +83,9 @@ internal class MTFontMathTableV2: MTFontMathTable {
     override func getLargerGlyph(_ glyph: CGGlyph) -> CGGlyph {
         let font = mathFont.mtfont(size: fontSize)
         let glyphName = font.get(nameForGlyph: glyph)
-
+        
         guard let variants = mTable[kVertVariants] as? NSDictionary,
-                let variantGlyphs = variants[glyphName] as? NSArray, variantGlyphs.count != .zero else {
+              let variantGlyphs = variants[glyphName] as? NSArray, variantGlyphs.count != .zero else {
             // There are no extra variants, so just returnt the current glyph.
             return glyph
         }
@@ -104,7 +104,7 @@ internal class MTFontMathTableV2: MTFontMathTable {
     override func getItalicCorrection(_ glyph: CGGlyph) -> CGFloat {
         let font = mathFont.mtfont(size: fontSize)
         let glyphName = font.get(nameForGlyph: glyph)
-
+        
         guard let italics = mTable[kItalic] as? NSDictionary, let val = italics[glyphName] as? NSNumber else {
             return .zero
         }
@@ -124,11 +124,47 @@ internal class MTFontMathTableV2: MTFontMathTable {
         }
         return fontUnitsToPt(val.intValue)
     }
+    
     override func getVerticalGlyphAssembly(forGlyph glyph: CGGlyph) -> [GlyphPart] {
         let font = mathFont.mtfont(size: fontSize)
         let glyphName = font.get(nameForGlyph: glyph)
         
         guard let assemblyTable = mTable[kVertAssembly] as? NSDictionary,
+              let assemblyInfo = assemblyTable[glyphName] as? NSDictionary,
+              let parts = assemblyInfo[kAssemblyParts] as? NSArray else {
+            // No vertical assembly defined for glyph
+            // parts should always have been defined, but if it isn't return nil
+            return []
+        }
+        
+        var rv = [GlyphPart]()
+        for part in parts {
+            guard let partInfo = part as? NSDictionary,
+                  let adv = partInfo["advance"] as? NSNumber,
+                  let end = partInfo["endConnector"] as? NSNumber,
+                  let start = partInfo["startConnector"] as? NSNumber,
+                  let ext = partInfo["extender"] as? NSNumber,
+                  let glyphName = partInfo["glyph"] as? String else { continue }
+            let fullAdvance = fontUnitsToPt(adv.intValue)
+            let endConnectorLength = fontUnitsToPt(end.intValue)
+            let startConnectorLength = fontUnitsToPt(start.intValue)
+            let isExtender = ext.boolValue
+            let glyph = font.get(glyphWithName: glyphName)
+            let part = GlyphPart(glyph: glyph, fullAdvance: fullAdvance,
+                                 startConnectorLength: startConnectorLength,
+                                 endConnectorLength: endConnectorLength,
+                                 isExtender: isExtender)
+            rv.append(part)
+        }
+        return rv
+    }
+    
+    //By Alpha
+    override func getHorizontalGlyphAssembly(forGlyph glyph: CGGlyph) -> [GlyphPart] {
+        let font = mathFont.mtfont(size: fontSize)
+        let glyphName = font.get(nameForGlyph: glyph)
+        
+        guard let assemblyTable = mTable[kHorizAssembly] as? NSDictionary,
               let assemblyInfo = assemblyTable[glyphName] as? NSDictionary,
               let parts = assemblyInfo[kAssemblyParts] as? NSArray else {
             // No vertical assembly defined for glyph
@@ -157,4 +193,6 @@ internal class MTFontMathTableV2: MTFontMathTable {
         }
         return rv
     }
+    //By Alpha
+
 }
