@@ -54,19 +54,19 @@ protocol DownShift {
 public class MTDisplay:NSObject, EditorDisplay {
     // MARK: - MTDisplay Extensions
     //By Alpha
-    public func closestIndex(to point: CGPoint) -> MTMathListIndex? {
+    func closestIndex(to point: CGPoint) -> MTMathListIndex? {
         return nil
     }
     
-    public func caretPosition(for index: MTMathListIndex) -> CGPoint {
+    func caretPosition(for index: MTMathListIndex) -> CGPoint {
         return kInvalidPosition
     }
     
-    public func highlightCharacter(at index: MTMathListIndex, color: UIColor) {
+    func highlightCharacter(at index: MTMathListIndex, color: UIColor) {
         // No-op
     }
     
-    public func highlight(with color: UIColor) {
+    func highlight(with color: UIColor) {
         // No-op
     }
     //By Alpha
