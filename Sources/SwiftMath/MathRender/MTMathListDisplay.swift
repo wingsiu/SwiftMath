@@ -16,6 +16,15 @@ import SwiftUI
 public let kInvalidPosition = CGPoint(x: -1, y: -1)
 public let kPixelDelta: CGFloat = 2
 
+
+// Define the protocol for shared display functionality
+protocol EditorDisplay {
+    // Shared methods
+    func closestIndex(to point: CGPoint) -> MTMathListIndex?
+    func caretPosition(for index: MTMathListIndex) -> CGPoint
+    func highlightCharacter(at index: MTMathListIndex, color: UIColor)
+    func highlight(with color: UIColor)
+}
 //By Alpha
 
 func isIos6Supported() -> Bool {
@@ -42,7 +51,27 @@ protocol DownShift {
 // MARK: - MTDisplay
 
 /// The base class for rendering a math equation.
-public class MTDisplay:NSObject {
+public class MTDisplay:NSObject, EditorDisplay {
+    // MARK: - MTDisplay Extensions
+    //By Alpha
+    func closestIndex(to point: CGPoint) -> MTMathListIndex? {
+        return nil
+    }
+    
+    func caretPosition(for index: MTMathListIndex) -> CGPoint {
+        return kInvalidPosition
+    }
+    
+    func highlightCharacter(at index: MTMathListIndex, color: UIColor) {
+        // No-op
+    }
+    
+    func highlight(with color: UIColor) {
+        // No-op
+    }
+    //By Alpha
+
+    
     
     // needed for isIos6Supported() func above
     static var initialized = false
@@ -111,24 +140,6 @@ public class MTDisplay:NSObject {
     /// The background color for this display
     var localBackgroundColor: MTColor?
     
-    // MARK: - MTDisplay Extensions
-    //By Alpha
-    public func closestIndex(to point: CGPoint) -> MTMathListIndex? {
-        return nil
-    }
-    
-    public func caretPosition(for index: MTMathListIndex) -> CGPoint {
-        return kInvalidPosition
-    }
-    
-    public func highlightCharacter(at index: MTMathListIndex, color: UIColor) {
-        // No-op
-    }
-    
-    public func highlight(with color: UIColor) {
-        // No-op
-    }
-    //By Alpha
     
 }
 
