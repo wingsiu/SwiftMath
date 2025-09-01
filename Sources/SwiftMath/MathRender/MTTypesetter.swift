@@ -1656,8 +1656,8 @@ public class MTTypesetter {//By Alpha
         var accentGlyphDisplay : MTDisplay =  MTGlyphDisplay(withGlpyh: accentGlyph, range: accent!.indexRange, font: styleFont)
         //By Alpha
         
-        if glyphWidth < accenteeWidth {
-            if let display = constructGlyph(accentGlyph, withWidth: accenteeWidth) {
+        if glyphWidth < accenteeWidth*0.9 {
+            if let display = constructGlyph(accentGlyph, withWidth: accenteeWidth*0.9) {
                 accentGlyphDisplay = display
                 accentPosition = CGPointMake(0, height)
             }
