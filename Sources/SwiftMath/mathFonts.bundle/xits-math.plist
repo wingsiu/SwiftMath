@@ -2794,7 +2794,7 @@
 					<key>extender</key>
 					<false/>
 					<key>glyph</key>
-					<string>uni0305.size1</string>
+					<string>uni0304</string>
 					<key>startConnector</key>
 					<integer>0</integer>
 				</dict>
@@ -2806,7 +2806,7 @@
 					<key>extender</key>
 					<true/>
 					<key>glyph</key>
-					<string>uni0305.size1</string>
+					<string>uni0304</string>
 					<key>startConnector</key>
 					<integer>1000</integer>
 				</dict>
