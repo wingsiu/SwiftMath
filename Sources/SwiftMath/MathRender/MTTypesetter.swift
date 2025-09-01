@@ -1660,7 +1660,7 @@ public class MTTypesetter {//By Alpha
             if let display = constructGlyph(accentGlyph, withWidth: accenteeWidth*0.9) {
                 accentGlyphDisplay = display
                 let accentAdjustment = styleFont.mathTable!.getTopAccentAdjustment(accentGlyph)
-                accentPosition = CGPointMake((accenteeWidth-display.width)/2 - accentAdjustment, height)
+                accentPosition = CGPointMake((accenteeWidth-display.width)/2 + accentAdjustment, height)
             }
         }
         print("skew:\(skew), \(glyphWidth), \(accenteeWidth), \(accentGlyphDisplay.width)") //By Alpha
