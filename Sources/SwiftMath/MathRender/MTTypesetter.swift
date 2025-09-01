@@ -1668,7 +1668,7 @@ public class MTTypesetter {//By Alpha
         let innerAtom = accent!.innerList!.atoms[0]
         let accenteeGlyph = self.findGlyphForCharacterAtIndex(innerAtom.nucleus.index(innerAtom.nucleus.endIndex, offsetBy:-1), inString:innerAtom.nucleus)
         let accenteeAdjustment = styleFont.mathTable!.getTopAccentAdjustment(accenteeGlyph)
-        print("skew:\(skew), \(glyphWidth), \(accenteeWidth), \(accentGlyphDisplay.width), \(accenteeAdjustment)") //By Alpha
+        print("skew \(innerAtom.nucleus):\(skew), \(glyphWidth), \(accenteeWidth), \(accentGlyphDisplay.width), \(accenteeAdjustment)") //By Alpha
         accentGlyphDisplay.ascent = glyphAscent;
         accentGlyphDisplay.descent = glyphDescent;
         //accentGlyphDisplay.width = glyphWidth;
