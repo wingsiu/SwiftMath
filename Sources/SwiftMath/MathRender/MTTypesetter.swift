@@ -1661,7 +1661,8 @@ public class MTTypesetter {//By Alpha
         if glyphWidth < accenteeWidth*0.9 && !isSingleCharAccentee(accent){
             if let display = constructGlyph(accentGlyph, withWidth: accenteeWidth*0.9) {
                 accentGlyphDisplay = display
-                accentPosition = CGPointMake((accenteeWidth-display.width)/2 , height)
+                //accentPosition = CGPointMake((accenteeWidth-display.width)/2 , height)
+                accentPosition = CGPointMake(0, height)
             }
         }
         print("skew:\(skew), \(glyphWidth), \(accenteeWidth), \(accentGlyphDisplay.width)") //By Alpha
