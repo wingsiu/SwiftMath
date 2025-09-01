@@ -2780,6 +2780,38 @@
 	</dict>
 	<key>h_assembly</key>
 	<dict>
+		<key>uni0304</key>
+		<dict>
+			<key>italic</key>
+			<integer>0</integer>
+			<key>parts</key>
+			<array>
+				<dict>
+					<key>advance</key>
+					<integer>1000</integer>
+					<key>endConnector</key>
+					<integer>1000</integer>
+					<key>extender</key>
+					<false/>
+					<key>glyph</key>
+					<string>uni0305.size1</string>
+					<key>startConnector</key>
+					<integer>0</integer>
+				</dict>
+				<dict>
+					<key>advance</key>
+					<integer>1000</integer>
+					<key>endConnector</key>
+					<integer>0</integer>
+					<key>extender</key>
+					<true/>
+					<key>glyph</key>
+					<string>uni0305.size1</string>
+					<key>startConnector</key>
+					<integer>1000</integer>
+				</dict>
+			</array>
+		</dict>
 		<key>uni0305</key>
 		<dict>
 			<key>italic</key>
@@ -4183,44 +4215,31 @@
 			<string>uni20EF</string>
 		</array>
 		<key>uni2190</key>
-		<array>
-		</array>
+		<array/>
 		<key>uni2192</key>
-		<array>
-		</array>
+		<array/>
 		<key>uni2194</key>
-		<array>
-		</array>
+		<array/>
 		<key>uni21A4</key>
-		<array>
-		</array>
+		<array/>
 		<key>uni21A6</key>
-		<array>
-		</array>
+		<array/>
 		<key>uni21BC</key>
-		<array>
-		</array>
+		<array/>
 		<key>uni21BD</key>
-		<array>
-		</array>
+		<array/>
 		<key>uni21C0</key>
-		<array>
-		</array>
+		<array/>
 		<key>uni21D0</key>
-		<array>
-		</array>
+		<array/>
 		<key>uni21D2</key>
-		<array>
-		</array>
+		<array/>
 		<key>uni21D4</key>
-		<array>
-		</array>
+		<array/>
 		<key>uni21DA</key>
-		<array>
-		</array>
+		<array/>
 		<key>uni21DB</key>
-		<array>
-		</array>
+		<array/>
 		<key>uni23B4</key>
 		<array>
 			<string>uni23B4</string>
@@ -4294,11 +4313,9 @@
 			<string>uni23E1.size5</string>
 		</array>
 		<key>uni2B45</key>
-		<array>
-		</array>
+		<array/>
 		<key>uni2B46</key>
-		<array>
-		</array>
+		<array/>
 	</dict>
 	<key>italic</key>
 	<dict>
@@ -7182,35 +7199,25 @@
 			<string>uni2140.rtlm.display</string>
 		</array>
 		<key>uni2191</key>
-		<array>
-		</array>
+		<array/>
 		<key>uni2193</key>
-		<array>
-		</array>
+		<array/>
 		<key>uni2195</key>
-		<array>
-		</array>
+		<array/>
 		<key>uni21BE</key>
-		<array>
-		</array>
+		<array/>
 		<key>uni21BF</key>
-		<array>
-		</array>
+		<array/>
 		<key>uni21C2</key>
-		<array>
-		</array>
+		<array/>
 		<key>uni21C3</key>
-		<array>
-		</array>
+		<array/>
 		<key>uni21D1</key>
-		<array>
-		</array>
+		<array/>
 		<key>uni21D3</key>
-		<array>
-		</array>
+		<array/>
 		<key>uni21D5</key>
-		<array>
-		</array>
+		<array/>
 		<key>uni220F</key>
 		<array>
 			<string>uni220F</string>
@@ -7270,11 +7277,9 @@
 			<string>uni221C.rtlm.size3</string>
 		</array>
 		<key>uni2223</key>
-		<array>
-		</array>
+		<array/>
 		<key>uni2225</key>
-		<array>
-		</array>
+		<array/>
 		<key>uni222B</key>
 		<array>
 			<string>uni222B</string>
@@ -7534,17 +7539,13 @@
 			<string>uni27EF</string>
 		</array>
 		<key>uni27F0</key>
-		<array>
-		</array>
+		<array/>
 		<key>uni27F1</key>
-		<array>
-		</array>
+		<array/>
 		<key>uni290A</key>
-		<array>
-		</array>
+		<array/>
 		<key>uni290B</key>
-		<array>
-		</array>
+		<array/>
 		<key>uni2980</key>
 		<array>
 			<string>uni2980</string>
@@ -7907,8 +7908,7 @@
 			<string>uni2A1C.up.display</string>
 		</array>
 		<key>uni2AF4</key>
-		<array>
-		</array>
+		<array/>
 		<key>uni2AFC</key>
 		<array>
 			<string>uni2AFC</string>
