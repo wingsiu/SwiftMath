@@ -1648,12 +1648,12 @@ public class MTTypesetter {//By Alpha
         var accentGlyph = self.findGlyphForCharacterAtIndex(end, inString:accent!.nucleus)
         let accenteeWidth = accentee!.width;
         var glyphAscent=CGFloat(0), glyphDescent=CGFloat(0), glyphWidth=CGFloat(0)
-        accentGlyph = self.findVariantGlyph(accentGlyph, withMaxWidth:accenteeWidth, maxWidth:&glyphAscent, glyphDescent:&glyphDescent, glyphWidth:&glyphWidth)
+        let variantGlyph = self.findVariantGlyph(accentGlyph, withMaxWidth:accenteeWidth, maxWidth:&glyphAscent, glyphDescent:&glyphDescent, glyphWidth:&glyphWidth)
         let delta = min(accentee!.ascent, styleFont.mathTable!.accentBaseHeight);
-        let skew = self.getSkew(accent, accenteeWidth:accenteeWidth, accentGlyph:accentGlyph)
+        let skew = self.getSkew(accent, accenteeWidth:accenteeWidth, accentGlyph:variantGlyph)
         let height = accentee!.ascent - delta;  // This is always positive since delta <= height.
         var accentPosition = CGPointMake(skew, height);
-        var accentGlyphDisplay : MTDisplay =  MTGlyphDisplay(withGlpyh: accentGlyph, range: accent!.indexRange, font: styleFont)
+        var accentGlyphDisplay : MTDisplay =  MTGlyphDisplay(withGlpyh: variantGlyph, range: accent!.indexRange, font: styleFont)
         //By Alpha
         
         if glyphWidth < accenteeWidth*0.9 {
