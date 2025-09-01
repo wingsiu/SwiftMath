@@ -4,7 +4,7 @@
 //
 //  Created by Alpha Ng on 3/8/2025.
 //
-import SwiftMath
+//import SwiftMath
 #if canImport(UIKit)
 import UIKit
 #endif
