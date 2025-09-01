@@ -1653,13 +1653,14 @@ public class MTTypesetter {//By Alpha
         var accentPosition = CGPointMake(skew, height);
         var accentGlyphDisplay : MTDisplay =  MTGlyphDisplay(withGlpyh: accentGlyph, range: accent!.indexRange, font: styleFont)
         //By Alpha
-        print("skew:\(skew)")
+        
         if glyphWidth < accenteeWidth {
             if let display = constructGlyph(accentGlyph, withWidth: accenteeWidth) {
                 accentGlyphDisplay = display
                 accentPosition = CGPointMake(0, height)
             }
         }
+        print("skew:\(skew), \(glyphWidth), \(accenteeWidth), \(accentGlyphDisplay.width)") //By Alpha
         accentGlyphDisplay.ascent = glyphAscent;
         accentGlyphDisplay.descent = glyphDescent;
         accentGlyphDisplay.width = glyphWidth;
