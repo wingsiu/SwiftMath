@@ -2788,27 +2788,27 @@
 			<array>
 				<dict>
 					<key>advance</key>
-					<integer>1000</integer>
+					<integer>300</integer>
 					<key>endConnector</key>
-					<integer>1000</integer>
+					<integer>300</integer>
 					<key>extender</key>
 					<false/>
 					<key>glyph</key>
-					<string>uni0304</string>
+					<string>uni20D6.ex</string>
 					<key>startConnector</key>
 					<integer>0</integer>
 				</dict>
 				<dict>
 					<key>advance</key>
-					<integer>1000</integer>
+					<integer>300</integer>
 					<key>endConnector</key>
-					<integer>0</integer>
+					<integer>300</integer>
 					<key>extender</key>
 					<true/>
 					<key>glyph</key>
-					<string>uni0304</string>
+					<string>uni20D6.ex</string>
 					<key>startConnector</key>
-					<integer>1000</integer>
+					<integer>0</integer>
 				</dict>
 			</array>
 		</dict>
