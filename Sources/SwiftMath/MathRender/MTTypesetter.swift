@@ -1657,17 +1657,18 @@ public class MTTypesetter {//By Alpha
         var accentPosition = CGPointMake(skew, height);
         var accentGlyphDisplay : MTDisplay =  MTGlyphDisplay(withGlpyh: variantGlyph, range: accent!.indexRange, font: styleFont)
         //By Alpha
-        
-        if glyphWidth < accenteeWidth*0.9 && !isSingleCharAccentee(accent){
-            if let display = constructGlyph(accentGlyph, withWidth: accenteeWidth*0.9) {
-                accentGlyphDisplay = display
-                //accentPosition = CGPointMake((accenteeWidth-display.width)/2 , height)
-                accentPosition = CGPointMake(0, height)
-            }
-        }
         let innerAtom = accent!.innerList!.atoms[0]
         let accenteeGlyph = self.findGlyphForCharacterAtIndex(innerAtom.nucleus.index(innerAtom.nucleus.endIndex, offsetBy:-1), inString:innerAtom.nucleus)
         let accenteeAdjustment = styleFont.mathTable!.getTopAccentAdjustment(accenteeGlyph)
+        if glyphWidth < accenteeWidth*0.9 && !isSingleCharAccentee(accent){
+            if let display = constructGlyph(accentGlyph, withWidth: accenteeWidth*0.9) {
+                accentGlyphDisplay = display
+                
+                accentPosition = CGPointMake((accenteeWidth-display.width+accenteeAdjustment)/2 , height)
+                //accentPosition = CGPointMake(0, height)
+            }
+        }
+        
         print("skew \(innerAtom.nucleus):\(skew), \(glyphWidth), \(accenteeWidth), \(accentGlyphDisplay.width), \(accenteeAdjustment)") //By Alpha
         accentGlyphDisplay.ascent = glyphAscent;
         accentGlyphDisplay.descent = glyphDescent;
