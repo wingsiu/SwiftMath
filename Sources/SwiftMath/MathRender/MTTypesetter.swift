@@ -1296,7 +1296,7 @@ public class MTTypesetter {//By Alpha
             //let width = CTFontGetAdvancesForGlyphs(styleFont.ctFont, .horizontal, &first, nil, 1);
             let display = MTGlyphConstructionDisplay(withGlyphs: glyphs, h_offsets: offsets, font: styleFont)
             let accentAdjustment = styleFont.mathTable!.getTopAccentAdjustment(first)
-            display.position.x = accentAdjustment
+            display.position.x = -accentAdjustment
             display.width = width;
             display.ascent = height;
             display.descent = 0;   // it's upto the rendering to adjust the display up or down.
