@@ -1660,8 +1660,8 @@ public class MTTypesetter {//By Alpha
         let innerAtom = accent!.innerList!.atoms[0]
         let accenteeGlyph = self.findGlyphForCharacterAtIndex(innerAtom.nucleus.index(innerAtom.nucleus.endIndex, offsetBy:-1), inString:innerAtom.nucleus)
         let accenteeAdjustment = styleFont.mathTable!.getTopAccentAdjustment(accenteeGlyph)
-        if glyphWidth < accenteeWidth*0.8 && !isSingleCharAccentee(accent){
-            if let display = constructGlyph(accentGlyph, withWidth: accenteeWidth*0.8) {
+        if glyphWidth < accenteeWidth*0.85 && !isSingleCharAccentee(accent){
+            if let display = constructGlyph(accentGlyph, withWidth: accenteeWidth*0.85) {
                 accentGlyphDisplay = display
                 accentPosition = CGPointMake((accenteeWidth-display.width)/2 , height)
                 //accentPosition = CGPointMake(0, height)
