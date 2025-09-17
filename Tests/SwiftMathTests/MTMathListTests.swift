@@ -621,4 +621,367 @@ final class MTMathListTests: XCTestCase {
         try checkListCopy(copy.cells[0][2], original:list2, forTest:self.description)
     }
 
+    // MARK: - IndexRange Update Tests
+    
+    func testUpdateIndexRanges() throws {
+        let list = MTMathList()
+        
+        // Create atoms with specific index ranges
+        let atom1 = MTMathAtom(type: .variable, value: "x")
+        atom1.indexRange = NSMakeRange(0, 1)
+        
+        let atom2 = MTMathAtom(type: .binaryOperator, value: "+")
+        atom2.indexRange = NSMakeRange(1, 1)
+        
+        let atom3 = MTMathAtom(type: .variable, value: "y")
+        atom3.indexRange = NSMakeRange(2, 1)
+        
+        list.add(atom1)
+        list.add(atom2)
+        list.add(atom3)
+        
+        // Test updating from index 1 with offset +2
+        list.updateIndexRanges(from: 1, offset: 2)
+        
+        // atom1 should remain unchanged
+        XCTAssertEqual(atom1.indexRange.location, 0)
+        XCTAssertEqual(atom1.indexRange.length, 1)
+        
+        // atom2 should be shifted by +2
+        XCTAssertEqual(atom2.indexRange.location, 3)
+        XCTAssertEqual(atom2.indexRange.length, 1)
+        
+        // atom3 should be shifted by +2  
+        XCTAssertEqual(atom3.indexRange.location, 4)
+        XCTAssertEqual(atom3.indexRange.length, 1)
+    }
+    
+    func testInsertAtomUpdatesIndexRanges() throws {
+        let list = MTMathList()
+        
+        // Create initial atoms
+        let atom1 = MTMathAtom(type: .variable, value: "x")
+        atom1.indexRange = NSMakeRange(0, 1)
+        
+        let atom2 = MTMathAtom(type: .variable, value: "y")
+        atom2.indexRange = NSMakeRange(1, 1)
+        
+        list.add(atom1)
+        list.add(atom2)
+        
+        // Insert a new atom at index 1
+        let newAtom = MTMathAtom(type: .binaryOperator, value: "+")
+        newAtom.indexRange = NSMakeRange(1, 1)
+        list.insert(newAtom, at: 1)
+        
+        // Verify atom1 remains unchanged
+        XCTAssertEqual(atom1.indexRange.location, 0)
+        XCTAssertEqual(atom1.indexRange.length, 1)
+        
+        // Verify newAtom is at the correct position
+        XCTAssertEqual(newAtom.indexRange.location, 1)
+        XCTAssertEqual(newAtom.indexRange.length, 1)
+        
+        // Verify atom2 is shifted by the inserted atom's length
+        XCTAssertEqual(atom2.indexRange.location, 2)
+        XCTAssertEqual(atom2.indexRange.length, 1)
+    }
+    
+    func testRemoveAtomUpdatesIndexRanges() throws {
+        let list = MTMathList()
+        
+        // Create atoms
+        let atom1 = MTMathAtom(type: .variable, value: "x")
+        atom1.indexRange = NSMakeRange(0, 1)
+        
+        let atom2 = MTMathAtom(type: .binaryOperator, value: "+")
+        atom2.indexRange = NSMakeRange(1, 1)
+        
+        let atom3 = MTMathAtom(type: .variable, value: "y")
+        atom3.indexRange = NSMakeRange(2, 1)
+        
+        list.add(atom1)
+        list.add(atom2)
+        list.add(atom3)
+        
+        // Remove atom at index 1 (atom2)
+        list.removeAtom(at: 1)
+        
+        // Verify atom1 remains unchanged
+        XCTAssertEqual(atom1.indexRange.location, 0)
+        XCTAssertEqual(atom1.indexRange.length, 1)
+        
+        // Verify atom3 is shifted back by the removed atom's length
+        XCTAssertEqual(atom3.indexRange.location, 1)
+        XCTAssertEqual(atom3.indexRange.length, 1)
+        
+        // Verify the list now has 2 atoms
+        XCTAssertEqual(list.atoms.count, 2)
+        XCTAssertEqual(list.atoms[0], atom1)
+        XCTAssertEqual(list.atoms[1], atom3)
+    }
+    
+    func testRemoveAtomsInRangeUpdatesIndexRanges() throws {
+        let list = MTMathList()
+        
+        // Create atoms
+        let atom1 = MTMathAtom(type: .variable, value: "x")
+        atom1.indexRange = NSMakeRange(0, 1)
+        
+        let atom2 = MTMathAtom(type: .binaryOperator, value: "+")
+        atom2.indexRange = NSMakeRange(1, 1)
+        
+        let atom3 = MTMathAtom(type: .variable, value: "y")
+        atom3.indexRange = NSMakeRange(2, 1)
+        
+        let atom4 = MTMathAtom(type: .binaryOperator, value: "=")
+        atom4.indexRange = NSMakeRange(3, 1)
+        
+        let atom5 = MTMathAtom(type: .number, value: "5")
+        atom5.indexRange = NSMakeRange(4, 1)
+        
+        list.add(atom1)
+        list.add(atom2)
+        list.add(atom3)
+        list.add(atom4)
+        list.add(atom5)
+        
+        // Remove atoms at range 1...2 (atom2 and atom3)
+        list.removeAtoms(in: 1...2)
+        
+        // Verify atom1 remains unchanged
+        XCTAssertEqual(atom1.indexRange.location, 0)
+        XCTAssertEqual(atom1.indexRange.length, 1)
+        
+        // Verify atom4 and atom5 are shifted back by 2 (removed atoms' combined length)
+        XCTAssertEqual(atom4.indexRange.location, 1)
+        XCTAssertEqual(atom4.indexRange.length, 1)
+        
+        XCTAssertEqual(atom5.indexRange.location, 2)
+        XCTAssertEqual(atom5.indexRange.length, 1)
+        
+        // Verify the list now has 3 atoms
+        XCTAssertEqual(list.atoms.count, 3)
+        XCTAssertEqual(list.atoms[0], atom1)
+        XCTAssertEqual(list.atoms[1], atom4)
+        XCTAssertEqual(list.atoms[2], atom5)
+    }
+    
+    func testInsertWithMultiCharacterLength() throws {
+        let list = MTMathList()
+        
+        // Create an atom with multi-character length
+        let atom1 = MTMathAtom(type: .number, value: "123")
+        atom1.indexRange = NSMakeRange(0, 3)
+        
+        let atom2 = MTMathAtom(type: .variable, value: "x")
+        atom2.indexRange = NSMakeRange(3, 1)
+        
+        list.add(atom1)
+        list.add(atom2)
+        
+        // Insert a new multi-character atom
+        let newAtom = MTMathAtom(type: .number, value: "45")
+        newAtom.indexRange = NSMakeRange(3, 2)
+        list.insert(newAtom, at: 1)
+        
+        // Verify atom1 remains unchanged
+        XCTAssertEqual(atom1.indexRange.location, 0)
+        XCTAssertEqual(atom1.indexRange.length, 3)
+        
+        // Verify atom2 is shifted by the inserted atom's length (2)
+        XCTAssertEqual(atom2.indexRange.location, 5)
+        XCTAssertEqual(atom2.indexRange.length, 1)
+    }
+    
+    func testNestedStructuresIndexRangeUpdate() throws {
+        let list = MTMathList()
+        
+        // Create a fraction with nested sublists
+        let fraction = MTFraction()
+        fraction.indexRange = NSMakeRange(0, 1)
+        
+        // Create numerator
+        let numAtom1 = MTMathAtom(type: .variable, value: "x")
+        numAtom1.indexRange = NSMakeRange(0, 1)
+        let numAtom2 = MTMathAtom(type: .binaryOperator, value: "+")
+        numAtom2.indexRange = NSMakeRange(1, 1)
+        
+        fraction.numerator = MTMathList()
+        fraction.numerator!.add(numAtom1)
+        fraction.numerator!.add(numAtom2)
+        
+        // Create denominator
+        let denomAtom = MTMathAtom(type: .variable, value: "y")
+        denomAtom.indexRange = NSMakeRange(0, 1)
+        
+        fraction.denominator = MTMathList()
+        fraction.denominator!.add(denomAtom)
+        
+        // Add fraction to main list
+        list.add(fraction)
+        
+        // Add another atom after the fraction
+        let atom2 = MTMathAtom(type: .variable, value: "z")
+        atom2.indexRange = NSMakeRange(1, 1)
+        list.add(atom2)
+        
+        // Insert a new atom at the beginning
+        let newAtom = MTMathAtom(type: .number, value: "2")
+        newAtom.indexRange = NSMakeRange(0, 1)
+        list.insert(newAtom, at: 0)
+        
+        // Verify the fraction's index range is updated
+        XCTAssertEqual(fraction.indexRange.location, 1)
+        
+        // Verify nested structures in numerator are updated
+        XCTAssertEqual(numAtom1.indexRange.location, 1)
+        XCTAssertEqual(numAtom2.indexRange.location, 2)
+        
+        // Verify nested structure in denominator is updated
+        XCTAssertEqual(denomAtom.indexRange.location, 1)
+        
+        // Verify the last atom is updated
+        XCTAssertEqual(atom2.indexRange.location, 2)
+    }
+    
+    func testAppendListUpdatesIndexRanges() throws {
+        let list1 = MTMathList()
+        let atom1 = MTMathAtom(type: .variable, value: "x")
+        atom1.indexRange = NSMakeRange(0, 1)
+        
+        let atom2 = MTMathAtom(type: .binaryOperator, value: "+")
+        atom2.indexRange = NSMakeRange(1, 1)
+        list1.add(atom1)
+        list1.add(atom2)
+        
+        let list2 = MTMathList()
+        let atom3 = MTMathAtom(type: .variable, value: "y")
+        atom3.indexRange = NSMakeRange(0, 1)
+        
+        let atom4 = MTMathAtom(type: .number, value: "2")
+        atom4.indexRange = NSMakeRange(1, 1)
+        list2.add(atom3)
+        list2.add(atom4)
+        
+        // Append list2 to list1
+        list1.append(list2)
+        
+        // Verify original atoms in list1 remain unchanged
+        XCTAssertEqual(atom1.indexRange.location, 0)
+        XCTAssertEqual(atom1.indexRange.length, 1)
+        XCTAssertEqual(atom2.indexRange.location, 1)
+        XCTAssertEqual(atom2.indexRange.length, 1)
+        
+        // Verify appended atoms have updated index ranges
+        XCTAssertEqual(atom3.indexRange.location, 2) // Base offset (2) + original location (0)
+        XCTAssertEqual(atom3.indexRange.length, 1)
+        XCTAssertEqual(atom4.indexRange.location, 3) // Base offset (2) + original location (1)
+        XCTAssertEqual(atom4.indexRange.length, 1)
+        
+        // Verify list1 now contains all atoms
+        XCTAssertEqual(list1.atoms.count, 4)
+    }
+    
+    func testInsertAtBeginning() throws {
+        let list = MTMathList()
+        
+        let atom1 = MTMathAtom(type: .variable, value: "x")
+        atom1.indexRange = NSMakeRange(0, 1)
+        
+        let atom2 = MTMathAtom(type: .variable, value: "y")
+        atom2.indexRange = NSMakeRange(1, 1)
+        
+        list.add(atom1)
+        list.add(atom2)
+        
+        // Insert at beginning
+        let newAtom = MTMathAtom(type: .number, value: "5")
+        newAtom.indexRange = NSMakeRange(0, 1)
+        list.insert(newAtom, at: 0)
+        
+        // All subsequent atoms should be shifted
+        XCTAssertEqual(newAtom.indexRange.location, 0)
+        XCTAssertEqual(atom1.indexRange.location, 1)
+        XCTAssertEqual(atom2.indexRange.location, 2)
+    }
+    
+    func testInsertAtEnd() throws {
+        let list = MTMathList()
+        
+        let atom1 = MTMathAtom(type: .variable, value: "x")
+        atom1.indexRange = NSMakeRange(0, 1)
+        
+        let atom2 = MTMathAtom(type: .variable, value: "y")
+        atom2.indexRange = NSMakeRange(1, 1)
+        
+        list.add(atom1)
+        list.add(atom2)
+        
+        // Insert at end
+        let newAtom = MTMathAtom(type: .number, value: "5")
+        newAtom.indexRange = NSMakeRange(2, 1)
+        list.insert(newAtom, at: 2)
+        
+        // Previous atoms should remain unchanged
+        XCTAssertEqual(atom1.indexRange.location, 0)
+        XCTAssertEqual(atom2.indexRange.location, 1)
+        XCTAssertEqual(newAtom.indexRange.location, 2)
+    }
+    
+    func testRemoveLastAtomNoIndexUpdate() throws {
+        let list = MTMathList()
+        
+        let atom1 = MTMathAtom(type: .variable, value: "x")
+        atom1.indexRange = NSMakeRange(0, 1)
+        
+        let atom2 = MTMathAtom(type: .variable, value: "y")
+        atom2.indexRange = NSMakeRange(1, 1)
+        
+        list.add(atom1)
+        list.add(atom2)
+        
+        // Remove last atom
+        list.removeLastAtom()
+        
+        // First atom should remain unchanged (no subsequent atoms to update)
+        XCTAssertEqual(atom1.indexRange.location, 0)
+        XCTAssertEqual(atom1.indexRange.length, 1)
+        XCTAssertEqual(list.atoms.count, 1)
+    }
+    
+    func testUpdateIndexRangesWithZeroOffset() throws {
+        let list = MTMathList()
+        
+        let atom1 = MTMathAtom(type: .variable, value: "x")
+        atom1.indexRange = NSMakeRange(0, 1)
+        
+        let atom2 = MTMathAtom(type: .variable, value: "y")
+        atom2.indexRange = NSMakeRange(1, 1)
+        
+        list.add(atom1)
+        list.add(atom2)
+        
+        // Update with zero offset should do nothing
+        list.updateIndexRanges(from: 0, offset: 0)
+        
+        XCTAssertEqual(atom1.indexRange.location, 0)
+        XCTAssertEqual(atom2.indexRange.location, 1)
+    }
+    
+    func testUpdateIndexRangesOutOfBounds() throws {
+        let list = MTMathList()
+        
+        let atom1 = MTMathAtom(type: .variable, value: "x")
+        atom1.indexRange = NSMakeRange(0, 1)
+        
+        list.add(atom1)
+        
+        // Update from index beyond list bounds should do nothing
+        list.updateIndexRanges(from: 5, offset: 2)
+        
+        XCTAssertEqual(atom1.indexRange.location, 0)
+        XCTAssertEqual(atom1.indexRange.length, 1)
+    }
+
 }
