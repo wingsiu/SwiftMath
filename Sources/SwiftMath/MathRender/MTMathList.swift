@@ -317,6 +317,14 @@ public class MTMathAtom: NSObject {
         // Update super/subscript:
         self.superScript = atom.superScript
         self.subScript = atom.subScript
+        //By Alpha
+        if let superScript = self.superScript {
+            superScript.parentAtom = self
+        }
+        if let subScript = self.subScript {
+            subScript.parentAtom = self
+        }
+        //By Alpha
     }
     
     /** Returns true if this atom allows scripts (sub or super). */
