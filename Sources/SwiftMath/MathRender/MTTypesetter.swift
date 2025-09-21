@@ -804,6 +804,10 @@ public class MTTypesetter {//By Alpha
                     
                     let table = atom as! MTMathTable?
                     let display = self.makeTable(table)
+                //By Alpha
+                table?.display = display
+                display?.atom = table
+                //By Alpha
                     displayAtoms.append(display!)
                     currentPosition.x += display!.width
                     // A table doesn't have subscripts or superscripts
@@ -1773,6 +1777,7 @@ public class MTTypesetter {//By Alpha
         tableDisplay.position = currentPosition;
         //By Alpha
         tableDisplay.range = table!.indexRange;
+        
         //By Alpha
         return tableDisplay;
     }
@@ -1786,6 +1791,10 @@ public class MTTypesetter {//By Alpha
                 let disp = MTTypesetter.createLineForMathList(row[i], font:font, style:style)
                 columnWidths[i] = max(disp!.width, columnWidths[i])
                 colDisplays.append(disp!)
+                //By Alpha
+                disp?.mathList = row[i]
+                row[i].display = disp
+                //By alpha
             }
             displays.append(colDisplays)
         }
