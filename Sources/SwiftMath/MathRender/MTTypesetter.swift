@@ -425,7 +425,8 @@ public class MTTypesetter {//By Alpha
         var preprocessed = [MTMathAtom]() //  arrayWithCapacity:ml.atoms.count)
         var prevNode:MTMathAtom! = nil
         preprocessed.reserveCapacity(ml!.atoms.count)
-        for atom in ml!.atoms {
+        //for atom in ml!.atoms {
+        for (index, atom) in ml!.atoms.enumerated() {
             if atom.type == .variable || atom.type == .number {
                 // This is not a TeX type node. TeX does this during parsing the input.
                 // switch to using the italic math font
@@ -443,6 +444,9 @@ public class MTTypesetter {//By Alpha
                 // combine ordinary atoms together
                 if prevNode != nil && prevNode.type == .ordinary && prevNode.subScript == nil && prevNode.superScript == nil {
                     prevNode.fuse(with: atom)
+                    //By Alpha
+                    ml?.removeAtom(at: index)
+                    //By Alpha
                     // skip the current node, we are done here.
                     continue
                 }
