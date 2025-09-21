@@ -635,7 +635,7 @@ public struct MTMathListBuilder {
             let table = self.buildTable(env: env, firstList:nil, isRow:false)
             
             //By Alpha
-            if let tb = table as? MTMathTable {
+            if let tb = (table as? MTInner)?.innerList?.atoms.first as? MTMathTable {
                 for i in 0..<(tb.numRows) {
                     for j in 0..<(tb.numColumns) {
                         tb.cells[i][j].parentAtom = table
