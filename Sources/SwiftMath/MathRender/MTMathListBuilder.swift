@@ -632,15 +632,19 @@ public struct MTMathListBuilder {
             if env == nil {
                 return nil;
             }
-            let table = self.buildTable(env: env, firstList:nil, isRow:false) as? MTMathTable
+            let table = self.buildTable(env: env, firstList:nil, isRow:false)
+            
             //By Alpha
-            for i in 0..<(table?.numRows ?? 0) {
-                for j in 0..<(table?.numColumns ?? 0) {
-                    table?.cells[i][j].parentAtom = table
-                    table?.cells[i][j].listType = .table
-                    table?.cells[i][j].row = i
-                    table?.cells[i][j].col = j
+            if let tb = table as? MTMathTable {
+                for i in 0..<(tb.numRows) {
+                    for j in 0..<(tb.numColumns) {
+                        tb.cells[i][j].parentAtom = table
+                        tb.cells[i][j].listType = .table
+                        tb.cells[i][j].row = i
+                        tb.cells[i][j].col = j
+                    }
                 }
+
             }
             //By Alpha
             return table
