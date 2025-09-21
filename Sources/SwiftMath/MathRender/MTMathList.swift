@@ -207,6 +207,9 @@ public class MTMathAtom: NSObject {
         self.indexRange = atom.indexRange
         self.fontStyle = atom.fontStyle
         self.fusedAtoms = atom.fusedAtoms
+        //By Alpha
+        self.parentNode = atom.parentNode
+        //By Alpha
     }
     
     override init() { }
@@ -346,6 +349,9 @@ public class MTFraction: MTMathAtom {
             self.hasRule = frac.hasRule
             self.leftDelimiter = frac.leftDelimiter
             self.rightDelimiter = frac.rightDelimiter
+            //By Alpha
+            self.parentNode = frac.parentNode
+            //By Alpha
         }
     }
     
@@ -377,6 +383,7 @@ public class MTFraction: MTMathAtom {
         let newFrac = super.finalized as! MTFraction
         newFrac.numerator = newFrac.numerator?.finalized
         newFrac.denominator = newFrac.denominator?.finalized
+        
         return newFrac
     }
     
@@ -398,6 +405,9 @@ public class MTRadical: MTMathAtom {
         self.radicand = MTMathList(rad?.radicand)
         self.degree = MTMathList(rad?.degree)
         self.nucleus = ""
+        //By Alpha
+        self.parentNode = rad?.parentNode
+        //By Alpha
     }
     
     override init() {
@@ -445,6 +455,9 @@ public class MTLargeOperator: MTMathAtom {
         super.init(op)
         self.type = .largeOperator
         self.limits = op!.limits
+        //By Alpha
+        self.parentNode = op?.parentNode
+        //By Alpha
     }
     
     init(value: String, limits: Bool) {
@@ -485,6 +498,9 @@ public class MTInner: MTMathAtom {
         self.innerList = MTMathList(inner?.innerList)
         self.leftBoundary = MTMathAtom(inner?.leftBoundary)
         self.rightBoundary = MTMathAtom(inner?.rightBoundary)
+        //By Alpha
+        self.parentNode = inner?.parentNode
+        //By Alpha
     }
     
     override init() {
@@ -532,6 +548,9 @@ public class MTOverLine: MTMathAtom {
         super.init(over)
         self.type = .overline
         self.innerList = MTMathList(over!.innerList)
+        //By Alpha
+        self.parentNode = over?.parentNode
+        //By Alpha
     }
     
     override init() {
@@ -555,6 +574,9 @@ public class MTUnderLine: MTMathAtom {
         super.init(under)
         self.type = .underline
         self.innerList = MTMathList(under?.innerList)
+        //By Alpha
+        self.parentNode = under?.parentNode
+        //By Alpha
     }
     
     override init() {
@@ -578,6 +600,9 @@ public class MTAccent: MTMathAtom {
         super.init(accent)
         self.type = .accent
         self.innerList = MTMathList(accent?.innerList)
+        //By Alpha
+        self.parentNode = accent?.parentNode
+        //By Alpha
     }
     
     init(value: String) {
@@ -602,6 +627,9 @@ public class MTMathSpace: MTMathAtom {
         super.init(space)
         self.type = .space
         self.space = space?.space ?? 0
+        //By Alpha
+        self.parentNode = space?.parentNode
+        //By Alpha
     }
     
     init(space:CGFloat) {
@@ -646,6 +674,9 @@ public class MTMathStyle: MTMathAtom {
         super.init(style)
         self.type = .style
         self.style = style!.style
+        //By Alpha
+        self.parentNode = style?.parentNode
+        //By Alpha
     }
     
     init(style:MTLineStyle) {
@@ -669,6 +700,9 @@ public class MTMathColor: MTMathAtom {
         self.type = .color
         self.colorString = color?.colorString ?? ""
         self.innerList = MTMathList(color?.innerList)
+        //By Alpha
+        self.parentNode = color?.parentNode
+        //By Alpha
     }
     
     override init() {
@@ -701,6 +735,9 @@ public class MTMathTextColor: MTMathAtom {
         self.type = .textcolor
         self.colorString = color?.colorString ?? ""
         self.innerList = MTMathList(color?.innerList)
+        //By Alpha
+        self.parentNode = color?.parentNode
+        //By Alpha
     }
 
     override init() {
@@ -733,6 +770,9 @@ public class MTMathColorbox: MTMathAtom {
         self.type = .colorBox
         self.colorString = cbox?.colorString ?? ""
         self.innerList = MTMathList(cbox?.innerList)
+        //By Alpha
+        self.parentNode = cbox?.parentNode
+        //By Alpha
     }
     
     override init() {
@@ -817,6 +857,9 @@ public class MTMathTable: MTMathAtom {
             cellCopy.append(newRow)
         }
         self.cells = cellCopy
+        //By Alpha
+        self.parentNode = table.parentNode
+        //By Alpha
     }
     
     override init() {
@@ -897,6 +940,7 @@ public class MTMathList : NSObject {
         for atom in list.atoms {
             self.atoms.append(atom.copy())
         }
+        self.parentAtom = list.parentAtom
     }
 
     /// A list of MathAtoms
@@ -984,6 +1028,9 @@ public class MTMathList : NSObject {
     public func add(_ atom: MTMathAtom?) {
         guard let atom = atom else { return }
         if self.isAtomAllowed(atom) {
+            //By alpha
+            atom.parentNode = self
+            //By Alpha
             self.atoms.append(atom)
         } else {
             NSException(name: NSExceptionName(rawValue: "Error"), reason: "Cannot add atom of type \(atom.type.rawValue) into mathlist").raise()
