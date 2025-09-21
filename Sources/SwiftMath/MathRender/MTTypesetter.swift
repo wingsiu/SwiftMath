@@ -876,9 +876,7 @@ public class MTTypesetter {//By Alpha
                             // Add a kern of delta
                             currentPosition.x += delta;
                         }
-                        //By Alpha
-                        atom.display = line
-                        //By Alpha
+                        
                         self.makeScripts(atom, display:line, index:UInt(NSMaxRange(atom.indexRange) - 1), delta:delta)
                     }
             } // switch
@@ -910,6 +908,11 @@ public class MTTypesetter {//By Alpha
          currentLine, currentLineIndexRange.location, currentLineIndexRange.length);*/
         
         let displayAtom = MTCTLineDisplay(withString:currentLine, position:currentPosition, range:currentLineIndexRange, font:styleFont, atoms:currentAtoms)
+        //By Alpha
+        for atom in currentAtoms {
+            atom.display = displayAtom
+        }
+        //By Alpha
         self.displayAtoms.append(displayAtom)
         // update the position
         currentPosition.x += displayAtom.width;
