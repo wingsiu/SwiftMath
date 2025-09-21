@@ -941,6 +941,9 @@ public class MTMathList : NSObject {
                 }
             default: break
             }
+            //By Alpha
+            newNode.parentNode = self
+            //By Alpha
             finalizedList.add(newNode)
             prevNode = newNode
         }

@@ -370,6 +370,7 @@ public class MTTypesetter {//By Alpha
     //static func createLineForMathList(_ mathList:MTMathList?, font:MTFont?, style:MTLineStyle)
     public static func createLineForMathList(_ mathList:MTMathList?, font:MTFont?, style:MTLineStyle) -> MTMathListDisplay? { //By Alpha
         let finalizedList = mathList?.finalized
+        
         // default is not cramped
         return self.createLineForMathList(finalizedList, font:font, style:style, cramped:false)
     }
