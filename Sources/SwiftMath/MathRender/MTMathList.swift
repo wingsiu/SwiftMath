@@ -940,7 +940,12 @@ public class MTMathList : NSObject {
         for atom in list.atoms {
             self.atoms.append(atom.copy())
         }
+        //By Alpha
         self.parentAtom = list.parentAtom
+        self.listType = list.listType
+        self.row = list.row
+        self.col = list.col
+        //By Alpha
     }
 
     /// A list of MathAtoms
@@ -991,6 +996,9 @@ public class MTMathList : NSObject {
             //By Alpha
             newNode.parentNode = self
             finalizedList.parentAtom = self.parentAtom
+            finalizedList.listType = self.listType
+            finalizedList.row = self.row
+            finalizedList.col = self.col
             //By Alpha
             finalizedList.add(newNode)
             prevNode = newNode
