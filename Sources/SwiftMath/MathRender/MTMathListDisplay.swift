@@ -139,6 +139,9 @@ public class MTDisplay:NSObject, EditorDisplay {
     var localTextColor: MTColor?
     /// The background color for this display
     var localBackgroundColor: MTColor?
+    //By Alpha
+    weak var atom : MTMathAtom?
+    //By Alpha
     
     
 }
@@ -263,6 +266,10 @@ public class MTMathListDisplay : MTDisplay {
     /// If a subscript or superscript this denotes the location in the parent MTList. For a
     /// regular list this is NSNotFound
     public var index: Int = 0
+    
+    //By Alpha
+    weak var mathList : MTMathList? = nil
+    //By Alpha
     
     init(withDisplays displays:[MTDisplay], range:NSRange) {
         super.init()

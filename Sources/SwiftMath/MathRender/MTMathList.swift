@@ -193,6 +193,11 @@ public class MTMathAtom: NSObject {
     /// This is used in the finalizing and preprocessing steps.
     var fusedAtoms = [MTMathAtom]()
     
+    //By Alpha
+    weak var parentNode : MTMathList? = nil
+    var display : MTDisplay? = nil
+    //By Alpha
+    
     init(_ atom:MTMathAtom?) {
         guard let atom = atom else { return }
         self.type = atom.type
@@ -894,6 +899,16 @@ public class MTMathList : NSObject {
     /// A list of MathAtoms
     public var atoms = [MTMathAtom]()
     
+    //By Alpha
+    weak var parentAtom: MTMathAtom? = nil
+    var listType : MTMathListIndex.MTMathListSubIndexType = .none
+    var col = 0
+    var row = 0
+    var display : MTMathListDisplay? = nil
+    //By Alpha
+    
+    
+    
     /// Create a new math list as a final expression and update atoms
     /// by combining like atoms that occur together and converting unary operators to binary operators.
     /// This function does not modify the current MTMathList
@@ -980,6 +995,7 @@ public class MTMathList : NSObject {
         guard let atom = atom else { return }
         guard self.atoms.indices.contains(index) || index == self.atoms.endIndex else { return }
         // guard self.atoms.endIndex >= index else { NSIndexException(); return }
+        atom.parentNode = self  //By Alpha
         if self.isAtomAllowed(atom) {
             // NSIndexException(self.atoms, index: index)
             self.atoms.insert(atom, at: index)
@@ -992,6 +1008,11 @@ public class MTMathList : NSObject {
     /// - parameter list: The list to append.
     public func append(_ list: MTMathList?) {
         guard let list = list else { return }
+        //By Alpha
+        for i in 0..<list.atoms.count {
+            list.atoms[i].parentNode = self
+        }
+        //By Alpha
         self.atoms += list.atoms
     }
     

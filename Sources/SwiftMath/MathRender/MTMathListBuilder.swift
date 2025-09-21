@@ -211,6 +211,9 @@ public struct MTMathListBuilder {
                 // this is a superscript for the previous atom
                 // note: if the next char is the stopChar it will be consumed by the ^ and so it doesn't count as stop
                 prevAtom!.superScript = self.buildInternal(true)
+                //By Alpha
+                prevAtom!.superScript!.parentAtom = prevAtom
+                //By Alpha
                 continue
             } else if char == "_" {
                 assert(!oneCharOnly, "This should have been handled before")
@@ -223,6 +226,9 @@ public struct MTMathListBuilder {
                 // this is a subscript for the previous atom
                 // note: if the next char is the stopChar it will be consumed by the _ and so it doesn't count as stop
                 prevAtom!.subScript = self.buildInternal(true)
+                //By Alpha
+                prevAtom!.superScript!.parentAtom = prevAtom
+                //By Alpha
                 continue
             } else if char == "{" {
                 // this puts us in a recursive routine, and sets oneCharOnly to false and no stop character
@@ -522,18 +528,34 @@ public struct MTMathListBuilder {
         if let accent = MTMathAtomFactory.accent(withName: command) {
             // The command is an accent
             accent.innerList = self.buildInternal(true)
+            //By Alpha
+            accent.innerList?.parentAtom = accent
+            accent.innerList?.listType = .accent
+            //By Alpha
             return accent;
         } else if command == "frac" {
             // A fraction command has 2 arguments
             let frac = MTFraction()
             frac.numerator = self.buildInternal(true)
             frac.denominator = self.buildInternal(true)
+            //By Alpha
+            frac.numerator?.parentAtom = frac
+            frac.numerator?.listType = .numerator
+            frac.denominator?.parentAtom = frac
+            frac.denominator?.listType = .denominator
+            //By Alpha
             return frac;
         } else if command == "binom" {
             // A binom command has 2 arguments
             let frac = MTFraction(hasRule: false)
             frac.numerator = self.buildInternal(true)
             frac.denominator = self.buildInternal(true)
+            //By Alpha
+            frac.numerator?.parentAtom = frac
+            frac.numerator?.listType = .numerator
+            frac.denominator?.parentAtom = frac
+            frac.denominator?.listType = .denominator
+            //By Alpha
             frac.leftDelimiter = "(";
             frac.rightDelimiter = ")";
             return frac;
@@ -549,9 +571,19 @@ public struct MTMathListBuilder {
                 // special handling for sqrt[degree]{radicand}
                 rad.degree = self.buildInternal(false, stopChar:"]")
                 rad.radicand = self.buildInternal(true)
+                //By Alpha
+                rad.degree?.parentAtom = rad
+                rad.degree?.listType = .degree
+                rad.radicand?.parentAtom = rad
+                rad.radicand?.listType = .radicand
+                //By Alpha
             } else {
                 self.unlookCharacter()
                 rad.radicand = self.buildInternal(true)
+                //By Alpha
+                rad.radicand?.parentAtom = rad
+                rad.radicand?.listType = .radicand
+                //By Alpha
             }
             return rad;
         } else if command == "left" {
@@ -572,23 +604,45 @@ public struct MTMathListBuilder {
             // reinstate the old inner atom.
             let newInner = currentInnerAtom;
             currentInnerAtom = oldInner;
+            //By Alpha
+            newInner?.innerList?.parentAtom = newInner
+            newInner?.innerList?.listType = .inner
+            //By Alpha
             return newInner;
         } else if command == "overline" {
             // The overline command has 1 arguments
             let over = MTOverLine()
             over.innerList = self.buildInternal(true)
+            //By Alpha
+            over.innerList?.parentAtom = over
+            over.innerList?.listType = .overline
+            //By Alpha
             return over
         } else if command == "underline" {
             // The underline command has 1 arguments
             let under = MTUnderLine()
             under.innerList = self.buildInternal(true)
+            //By Alpha
+            under.innerList?.parentAtom = under
+            under.innerList?.listType = .underline
+            //By Alpha
             return under
         } else if command == "begin" {
             let env = self.readEnvironment()
             if env == nil {
                 return nil;
             }
-            let table = self.buildTable(env: env, firstList:nil, isRow:false)
+            let table = self.buildTable(env: env, firstList:nil, isRow:false) as? MTMathTable
+            //By Alpha
+            for i in 0..<(table?.numRows ?? 0) {
+                for j in 0..<(table?.numColumns ?? 0) {
+                    table?.cells[i][j].parentAtom = table
+                    table?.cells[i][j].listType = .table
+                    table?.cells[i][j].row = i
+                    table?.cells[i][j].col = j
+                }
+            }
+            //By Alpha
             return table
         } else if command == "color" {
             // A color command has 2 arguments
@@ -599,6 +653,10 @@ public struct MTMathListBuilder {
             }
             mathColor.colorString = color!
             mathColor.innerList = self.buildInternal(true)
+            //By Alpha
+            mathColor.innerList?.parentAtom = mathColor
+            mathColor.innerList?.listType = .color
+            //By Alpha
             return mathColor
         } else if command == "textcolor" {
             // A textcolor command has 2 arguments
@@ -609,6 +667,10 @@ public struct MTMathListBuilder {
             }
             mathColor.colorString = color!
             mathColor.innerList = self.buildInternal(true)
+            //By Alpha
+            mathColor.innerList?.parentAtom = mathColor
+            mathColor.innerList?.listType = .textcolor
+            //By Alpha
             return mathColor
         } else if command == "colorbox" {
             // A color command has 2 arguments
@@ -619,6 +681,10 @@ public struct MTMathListBuilder {
             }
             mathColorbox.colorString = color!
             mathColorbox.innerList = self.buildInternal(true)
+            //By Alpha
+            mathColorbox.innerList?.parentAtom = mathColorbox
+            mathColorbox.innerList?.listType = .colorBox
+            //By Alpha
             return mathColorbox
         } else {
             let errorMessage = "Invalid command \\\(command)"

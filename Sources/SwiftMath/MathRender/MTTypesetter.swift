@@ -388,6 +388,9 @@ public class MTTypesetter {//By Alpha
         let lastAtom = mathList!.atoms.last
         let last = lastAtom?.indexRange ?? NSMakeRange(0, 0)
         let line = MTMathListDisplay(withDisplays: typesetter.displayAtoms, range: NSMakeRange(0, NSMaxRange(last)))
+        //By Alpha
+        line.mathList = mathList
+        //By Alpha
         return line
     }
     
@@ -437,6 +440,9 @@ public class MTTypesetter {//By Alpha
             }
             
             // TODO: add italic correction here or in second pass?
+            //By Alpha
+            atom.parentNode = ml
+            //By Alpha
             prevNode = atom
             preprocessed.append(atom)
         }
@@ -543,6 +549,8 @@ public class MTTypesetter {//By Alpha
                             currentPosition.x += interElementSpace
                         }
                     }
+                    display?.mathList = colorAtom.innerList
+                    colorAtom.display = display
                     //By Alpha
                     display!.position = currentPosition
                     currentPosition.x += display!.width
@@ -564,6 +572,8 @@ public class MTTypesetter {//By Alpha
                         }
                         colorLastAtomType = innerList.atoms.last!.type
                     }
+                    display?.mathList = colorAtom.innerList
+                    colorAtom.display = display
                     //By Alpha
                     if prevNode != nil {
                         //By Alpha
@@ -619,6 +629,8 @@ public class MTTypesetter {//By Alpha
                             currentPosition.x += interElementSpace
                         }
                     }
+                    display?.mathList = colorboxAtom.innerList
+                    colorboxAtom.display = display
                     //By Alpha
 
                     display!.position = currentPosition
@@ -638,7 +650,15 @@ public class MTTypesetter {//By Alpha
                         // add the degree to the radical
                         let degree = MTTypesetter.createLineForMathList(rad.degree, font:font, style:.scriptOfScript)
                         displayRad!.setDegree(degree, fontMetrics:styleFont.mathTable)
+                        //By Alpha
+                        displayRad?.degree?.mathList = rad.degree
+                        rad.degree?.display = displayRad?.degree
+                        //By alpha
                     }
+                    //By Alpha
+                    displayRad?.atom = rad
+                    rad.radicand?.display = displayRad?.radicand
+                    //By Alpha
                     displayAtoms.append(displayRad!)
                     currentPosition.x += displayRad!.width
                     
@@ -656,7 +676,16 @@ public class MTTypesetter {//By Alpha
                     }
                     let frac = atom as! MTFraction?
                     self.addInterElementSpace(prevNode, currentType:atom.type)
-                    let display = self.makeFraction(frac)
+                    //let display = self.makeFraction(frac)
+                    //By Alpha
+                    let display = self.makeFraction(frac) as? MTFractionDisplay
+                    display?.atom = frac
+                    display?.numerator?.mathList = frac?.numerator
+                    display?.denominator?.mathList = frac?.denominator
+                    frac?.display = display
+                    frac?.numerator?.display = display?.numerator
+                    frac?.denominator?.display = display?.denominator
+                    //By Alpha
                     displayAtoms.append(display!)
                     currentPosition.x += display!.width;
                     // add super scripts || subscripts
@@ -672,6 +701,10 @@ public class MTTypesetter {//By Alpha
                     self.addInterElementSpace(prevNode, currentType:atom.type)
                     let op = atom as! MTLargeOperator?
                     let display = self.makeLargeOp(op)
+                    //By alpha
+                    display?.atom = op
+                    op?.display = display
+                    //By Alpha
                     displayAtoms.append(display!)
                     
                 case .inner:
@@ -688,6 +721,11 @@ public class MTTypesetter {//By Alpha
                         display = MTTypesetter.createLineForMathList(inner!.innerList, font:font, style:style, cramped:cramped)
                     }
                     //display!.range = inner!.indexRange //By Alpha
+                    //By Alpha
+                    display?.atom = inner
+                    inner?.display = display
+                
+                    //By Alpha
                     display!.position = currentPosition
                     currentPosition.x += display!.width
                     displayAtoms.append(display!)
@@ -707,6 +745,10 @@ public class MTTypesetter {//By Alpha
                     
                     let under = atom as! MTUnderLine?
                     let display = self.makeUnderline(under)
+                    //By Alpha
+                    display?.atom = under
+                    under?.display = display
+                    //By Alpha
                     displayAtoms.append(display!)
                     currentPosition.x += display!.width;
                     // add super scripts || subscripts
