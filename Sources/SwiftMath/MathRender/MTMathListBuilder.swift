@@ -227,7 +227,7 @@ public struct MTMathListBuilder {
                 // note: if the next char is the stopChar it will be consumed by the _ and so it doesn't count as stop
                 prevAtom!.subScript = self.buildInternal(true)
                 //By Alpha
-                prevAtom!.superScript!.parentAtom = prevAtom
+                prevAtom!.subScript!.parentAtom = prevAtom
                 //By Alpha
                 continue
             } else if char == "{" {
