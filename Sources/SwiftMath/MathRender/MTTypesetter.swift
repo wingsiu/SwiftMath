@@ -859,9 +859,7 @@ public class MTTypesetter {//By Alpha
                     } else {
                         currentAtoms.append(atom)
                     }
-                    //By Alpha
-                    atom.display = self.displayAtoms.last
-                    //By Alpha
+                    
                     // add super scripts || subscripts
                     if atom.subScript != nil || atom.superScript != nil {
                         // stash the existing line
@@ -878,6 +876,9 @@ public class MTTypesetter {//By Alpha
                             // Add a kern of delta
                             currentPosition.x += delta;
                         }
+                        //By Alpha
+                        atom.display = line
+                        //By Alpha
                         self.makeScripts(atom, display:line, index:UInt(NSMaxRange(atom.indexRange) - 1), delta:delta)
                     }
             } // switch
