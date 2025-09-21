@@ -443,12 +443,12 @@ public class MTTypesetter {//By Alpha
                 // This is Rule 14 to merge ordinary characters.
                 // combine ordinary atoms together
                 if prevNode != nil && prevNode.type == .ordinary && prevNode.subScript == nil && prevNode.superScript == nil {
-                    prevNode.fuse(with: atom)
+                    // prevNode.fuse(with: atom) //By Alpha
                     //By Alpha
-                    ml?.removeAtom(at: index)
+                    //ml?.removeAtom(at: index)
                     //By Alpha
                     // skip the current node, we are done here.
-                    continue
+                    //continue //By Alpha
                 }
             }
             
