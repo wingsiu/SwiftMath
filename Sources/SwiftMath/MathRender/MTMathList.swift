@@ -270,6 +270,9 @@ public class MTMathAtom: NSObject {
         let finalized : MTMathAtom = self.copy()
         finalized.superScript = finalized.superScript?.finalized
         finalized.subScript = finalized.subScript?.finalized
+        //By Alpha
+        
+        //By Alpha
         return finalized
     }
     
@@ -943,6 +946,7 @@ public class MTMathList : NSObject {
             }
             //By Alpha
             newNode.parentNode = self
+            finalizedList.parentAtom = self.parentAtom
             //By Alpha
             finalizedList.add(newNode)
             prevNode = newNode

@@ -994,6 +994,9 @@ public class MTTypesetter {//By Alpha
             subscriptShiftDown = fmax(subscriptShiftDown, _subscript!.ascent - styleFont.mathTable!.subscriptTopMax);
             // add the subscript
             _subscript?.position = CGPointMake(currentPosition.x, currentPosition.y - subscriptShiftDown);
+            //By Alpha
+            _subscript?.mathList = atom!.subScript
+            //By Alpha
             displayAtoms.append(_subscript!)
             // update the position
             currentPosition.x += _subscript!.width + styleFont.mathTable!.spaceAfterScript;
@@ -1008,6 +1011,9 @@ public class MTTypesetter {//By Alpha
         
         if atom!.subScript == nil {
             superScript!.position = CGPointMake(currentPosition.x, currentPosition.y + superScriptShiftUp);
+            //By Alpha
+            superScript?.mathList = atom!.superScript
+            //By Alpha
             displayAtoms.append(superScript!)
             // update the position
             currentPosition.x += superScript!.width + styleFont.mathTable!.spaceAfterScript;
@@ -1031,6 +1037,10 @@ public class MTTypesetter {//By Alpha
             }
         }
         // The delta is the italic correction above that shift superscript position
+        //By Alpha
+        superScript?.mathList = atom!.superScript
+        ssubscript?.mathList = atom!.subScript
+        //By Alpha
         superScript?.position = CGPointMake(currentPosition.x + delta, currentPosition.y + superScriptShiftUp);
         displayAtoms.append(superScript!)
         ssubscript?.position = CGPointMake(currentPosition.x, currentPosition.y - subscriptShiftDown);
