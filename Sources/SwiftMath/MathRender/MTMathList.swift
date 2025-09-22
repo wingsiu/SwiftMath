@@ -194,7 +194,7 @@ public class MTMathAtom: NSObject {
     var fusedAtoms = [MTMathAtom]()
     
     //By Alpha
-    public weak var parentNode : MTMathList? = nil
+    public var parentNode : MTMathList? = nil
     public var display : MTDisplay? = nil
     //By Alpha
     
