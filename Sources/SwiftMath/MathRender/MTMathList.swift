@@ -194,8 +194,8 @@ public class MTMathAtom: NSObject {
     var fusedAtoms = [MTMathAtom]()
     
     //By Alpha
-    weak var parentNode : MTMathList? = nil
-    var display : MTDisplay? = nil
+    public weak var parentNode : MTMathList? = nil
+    public var display : MTDisplay? = nil
     //By Alpha
     
     init(_ atom:MTMathAtom?) {
@@ -960,11 +960,11 @@ public class MTMathList : NSObject {
     public var atoms = [MTMathAtom]()
     
     //By Alpha
-    weak var parentAtom: MTMathAtom? = nil
-    var listType : MTMathListIndex.MTMathListSubIndexType = .none
-    var col = 0
-    var row = 0
-    var display : MTMathListDisplay? = nil
+    public weak var parentAtom: MTMathAtom? = nil
+    public var listType : MTMathListIndex.MTMathListSubIndexType = .none
+    public var col = 0
+    public var row = 0
+    public var display : MTMathListDisplay? = nil
     //By Alpha
     
     

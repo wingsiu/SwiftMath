@@ -140,7 +140,7 @@ public class MTDisplay:NSObject, EditorDisplay {
     /// The background color for this display
     var localBackgroundColor: MTColor?
     //By Alpha
-    weak var atom : MTMathAtom?
+    public weak var atom : MTMathAtom?
     //By Alpha
     
     
@@ -268,7 +268,7 @@ public class MTMathListDisplay : MTDisplay {
     public var index: Int = 0
     
     //By Alpha
-    weak var mathList : MTMathList? = nil
+    public weak var mathList : MTMathList? = nil
     //By Alpha
     
     init(withDisplays displays:[MTDisplay], range:NSRange) {
