@@ -378,9 +378,12 @@ public class MTTypesetter {//By Alpha
             } else {
                 finalizedList = mathList.finalized
             }}
+        let listDisplay = self.createLineForMathList(finalizedList, font:font, style:style, cramped:false)
+        mathList?.display = listDisplay
+        return listDisplay
         //By Alpha
         // default is not cramped
-        return self.createLineForMathList(finalizedList, font:font, style:style, cramped:false)
+        //return self.createLineForMathList(finalizedList, font:font, style:style, cramped:false)
     }
     
     // Internal
