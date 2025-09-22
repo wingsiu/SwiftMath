@@ -960,7 +960,7 @@ public class MTMathList : NSObject {
     public var atoms = [MTMathAtom]()
     
     //By Alpha
-    public weak var parentAtom: MTMathAtom? = nil
+    public var parentAtom: MTMathAtom? = nil
     public var listType : MTMathListIndex.MTMathListSubIndexType = .none
     public var col = 0
     public var row = 0
