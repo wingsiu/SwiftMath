@@ -806,7 +806,7 @@ public class MTTypesetter {//By Alpha
                     }
                     // Accent is considered as Ord in rule 16.
                     self.addInterElementSpace(prevNode, currentType:.ordinary)
-                    atom.type = .ordinary;
+                    //atom.type = .ordinary; //By Alpha
                     
                     let accent = atom as! MTAccent?
                     let display = self.makeAccent(accent)
