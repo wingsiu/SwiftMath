@@ -819,6 +819,7 @@ public class MTTypesetter {//By Alpha
                     accent?.display = display
                     accent?.innerList?.display = (display as? MTAccentDisplay)?.accentee
                     display?.atom = accent
+                    accent?.innerList?.parentAtom = accent
                     //By Alpha
                     displayAtoms.append(display!)
                     currentPosition.x += display!.width;
