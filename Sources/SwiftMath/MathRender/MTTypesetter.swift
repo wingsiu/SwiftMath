@@ -1743,6 +1743,8 @@ public class MTTypesetter {//By Alpha
         if glyphWidth < accenteeWidth*0.85 && !isSingleCharAccentee(accent){
             if let display = constructGlyph(accentGlyph, withWidth: accenteeWidth*0.85) {
                 accentGlyphDisplay = display
+                glyphAscent = display.ascent
+                glyphDescent = display.descent
                 accentPosition = CGPointMake((accenteeWidth-display.width)/2 , height)
                 //accentPosition = CGPointMake(0, height)
             }
