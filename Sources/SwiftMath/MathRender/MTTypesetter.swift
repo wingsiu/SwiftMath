@@ -713,6 +713,7 @@ public class MTTypesetter {//By Alpha
                     frac?.display = display
                     frac?.numerator?.display = display?.numerator
                     frac?.denominator?.display = display?.denominator
+                    
                     //By Alpha
                     displayAtoms.append(display!)
                     currentPosition.x += display!.width;
