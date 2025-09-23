@@ -213,6 +213,7 @@ public struct MTMathListBuilder {
                 prevAtom!.superScript = self.buildInternal(true)
                 //By Alpha
                 prevAtom!.superScript!.parentAtom = prevAtom
+                prevAtom!.superScript!.listType = .superscript
                 //By Alpha
                 continue
             } else if char == "_" {
@@ -228,6 +229,7 @@ public struct MTMathListBuilder {
                 prevAtom!.subScript = self.buildInternal(true)
                 //By Alpha
                 prevAtom!.subScript!.parentAtom = prevAtom
+                prevAtom!.subScript!.listType = .superscript
                 //By Alpha
                 continue
             } else if char == "{" {
