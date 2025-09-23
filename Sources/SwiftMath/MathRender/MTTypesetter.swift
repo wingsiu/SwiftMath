@@ -813,6 +813,7 @@ public class MTTypesetter {//By Alpha
                 
                     //By Alpha
                     accent?.display = display
+                    accent?.innerList?.display = (display as? MTAccentDisplay)?.accentee
                     display?.atom = accent
                     //By Alpha
                     displayAtoms.append(display!)
