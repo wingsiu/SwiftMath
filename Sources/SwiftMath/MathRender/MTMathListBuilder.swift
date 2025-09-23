@@ -229,7 +229,7 @@ public struct MTMathListBuilder {
                 prevAtom!.subScript = self.buildInternal(true)
                 //By Alpha
                 prevAtom!.subScript!.parentAtom = prevAtom
-                prevAtom!.subScript!.listType = .superscript
+                prevAtom!.subScript!.listType = .ssubscript
                 //By Alpha
                 continue
             } else if char == "{" {
