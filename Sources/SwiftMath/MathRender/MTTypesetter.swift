@@ -713,6 +713,8 @@ public class MTTypesetter {//By Alpha
                     frac?.display = display
                     frac?.numerator?.display = display?.numerator
                     frac?.denominator?.display = display?.denominator
+                    frac?.numerator?.parentAtom = frac
+                    frac?.denominator?.parentAtom = frac
                     
                     //By Alpha
                     displayAtoms.append(display!)
