@@ -674,6 +674,7 @@ public class MTTypesetter {//By Alpha
                     //By Alpha
                     displayRad?.atom = rad
                     rad.radicand?.display = displayRad?.radicand
+                    rad.display = displayRad
                     //By Alpha
                     displayAtoms.append(displayRad!)
                     currentPosition.x += displayRad!.width
