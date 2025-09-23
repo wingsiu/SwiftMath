@@ -425,9 +425,12 @@ public class MTTypesetter {//By Alpha
         // Specifically rules 5 & 6 in Appendix G are handled by finalize.
         // This function does not do a complete preprocessing as specified by TeX either. It removes any special atom types
         // that are not included in TeX and applies Rule 14 to merge ordinary characters.
-        var preprocessed = [MTMathAtom]() //  arrayWithCapacity:ml.atoms.count)
+//        var preprocessed = [MTMathAtom]() //  arrayWithCapacity:ml.atoms.count)
         var prevNode:MTMathAtom! = nil
-        preprocessed.reserveCapacity(ml!.atoms.count)
+//        preprocessed.reserveCapacity(ml!.atoms.count)
+        //By Alpha
+        let preprocessed = ml?.atoms
+        //By Alpha
         //for atom in ml!.atoms {
         for (index, atom) in ml!.atoms.enumerated() {
             if atom.type == .variable || atom.type == .number {
@@ -460,9 +463,9 @@ public class MTTypesetter {//By Alpha
             atom.parentNode = ml
             //By Alpha
             prevNode = atom
-            preprocessed.append(atom)
+            //preprocessed.append(atom) //By Alpha
         }
-        return preprocessed
+        return preprocessed!
     }
     
     // returns the size of the font in this style
