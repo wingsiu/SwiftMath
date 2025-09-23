@@ -268,7 +268,7 @@ public class MTMathListDisplay : MTDisplay {
     public var index: Int = 0
     
     //By Alpha
-    public weak var mathList : MTMathList? = nil
+    public var mathList : MTMathList? = nil
     //By Alpha
     
     init(withDisplays displays:[MTDisplay], range:NSRange) {
