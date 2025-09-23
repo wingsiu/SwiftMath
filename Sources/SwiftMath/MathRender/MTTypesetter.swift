@@ -810,6 +810,11 @@ public class MTTypesetter {//By Alpha
                     
                     let accent = atom as! MTAccent?
                     let display = self.makeAccent(accent)
+                
+                    //By Alpha
+                    accent?.display = display
+                    display?.atom = accent
+                    //By Alpha
                     displayAtoms.append(display!)
                     currentPosition.x += display!.width;
                     
