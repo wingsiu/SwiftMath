@@ -1019,6 +1019,7 @@ public class MTTypesetter {//By Alpha
             _subscript?.position = CGPointMake(currentPosition.x, currentPosition.y - subscriptShiftDown);
             //By Alpha
             _subscript?.mathList = atom!.subScript
+            atom?.subScript?.display = _subscript
             //By Alpha
             displayAtoms.append(_subscript!)
             // update the position
@@ -1036,6 +1037,7 @@ public class MTTypesetter {//By Alpha
             superScript!.position = CGPointMake(currentPosition.x, currentPosition.y + superScriptShiftUp);
             //By Alpha
             superScript?.mathList = atom!.superScript
+            atom?.superScript?.display = superScript
             //By Alpha
             displayAtoms.append(superScript!)
             // update the position
@@ -1063,6 +1065,8 @@ public class MTTypesetter {//By Alpha
         //By Alpha
         superScript?.mathList = atom!.superScript
         ssubscript?.mathList = atom!.subScript
+        atom?.superScript?.display = superScript
+        atom?.subScript?.display = ssubscript
         //By Alpha
         superScript?.position = CGPointMake(currentPosition.x + delta, currentPosition.y + superScriptShiftUp);
         displayAtoms.append(superScript!)
