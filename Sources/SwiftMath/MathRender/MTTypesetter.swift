@@ -402,6 +402,9 @@ public class MTTypesetter {//By Alpha
         let line = MTMathListDisplay(withDisplays: typesetter.displayAtoms, range: NSMakeRange(0, NSMaxRange(last)))
         //By Alpha
         line.mathList = mathList
+        for atom in preprocessedAtoms {
+            atom.parentNode = mathList
+        }
         //By Alpha
         return line
     }
@@ -431,8 +434,8 @@ public class MTTypesetter {//By Alpha
         //By Alpha
         let preprocessed = ml?.atoms
         //By Alpha
-        //for atom in ml!.atoms {
-        for (index, atom) in ml!.atoms.enumerated() {
+        for atom in ml!.atoms {
+        //for (index, atom) in ml!.atoms.enumerated() {
             if atom.type == .variable || atom.type == .number {
                 // This is not a TeX type node. TeX does this during parsing the input.
                 // switch to using the italic math font
@@ -922,6 +925,7 @@ public class MTTypesetter {//By Alpha
         //By Alpha
         for atom in currentAtoms {
             atom.display = displayAtom
+            
         }
         //By Alpha
         self.displayAtoms.append(displayAtom)
