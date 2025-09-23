@@ -1370,16 +1370,32 @@ public class MTTypesetter {//By Alpha
             var glyphs = [NSNumber](), offsets = [NSNumber]()
             var width:CGFloat=0
             self.constructGlyphWithParts(parts, glyphHeight:glyphWidth, glyphs:&glyphs, offsets:&offsets, height:&width)
-            var first = glyphs[0].uint16Value
-            let bbox = CTFontGetBoundingRectsForGlyphs(styleFont.ctFont, .horizontal , &first, nil, CFIndex(glyphs.count))
-            let height = bbox.height
+            //var first = glyphs[0].uint16Value
+            //let bbox = CTFontGetBoundingRectsForGlyphs(styleFont.ctFont, .horizontal , &first, nil, CFIndex(glyphs.count))
+            //let height = bbox.height
+            
             //let width = CTFontGetAdvancesForGlyphs(styleFont.ctFont, .horizontal, &first, nil, 1);
+            
+            var totalTop: CGFloat = 0
+            var totalBottom: CGFloat = 0
+            for g in glyphs {
+                var glyph = g.uint16Value
+                var glyphRect = CGRect.zero
+                CTFontGetBoundingRectsForGlyphs(styleFont.ctFont, .horizontal, &glyph, &glyphRect, 1)
+                let top = glyphRect.origin.y + glyphRect.size.height
+                let bottom = glyphRect.origin.y
+                totalTop = max(totalTop, top)
+                totalBottom = min(totalBottom, bottom)
+            }
+            let ascent = totalTop
+            let descent = -totalBottom // if bottom is negative
+            
             let display = MTGlyphConstructionDisplay(withGlyphs: glyphs, h_offsets: offsets, font: styleFont)
             //let accentAdjustment = styleFont.mathTable!.getTopAccentAdjustment(first)
             //display.position.x = -accentAdjustment
             display.width = width;
-            display.ascent = height;
-            display.descent = 0;   // it's upto the rendering to adjust the display up or down.
+            display.ascent = ascent;
+            display.descent = descent;   // it's upto the rendering to adjust the display up or down.
             return display;
         } else {
             return nil
