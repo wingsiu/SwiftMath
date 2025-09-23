@@ -1575,10 +1575,20 @@ public class MTTypesetter {//By Alpha
             if superScript != nil {
                 let upperLimitGap = max(styleFont.mathTable!.upperLimitGapMin, styleFont.mathTable!.upperLimitBaselineRiseMin - superScript!.descent);
                 opsDisplay.upperLimitGap = upperLimitGap;
+                //By Alpha
+                op.display = opsDisplay
+                op.superScript?.parentAtom = op
+                op.superScript?.display = superScript
+                //By Alpha
             }
             if subScript != nil {
                 let lowerLimitGap = max(styleFont.mathTable!.lowerLimitGapMin, styleFont.mathTable!.lowerLimitBaselineDropMin - subScript!.ascent);
                 opsDisplay.lowerLimitGap = lowerLimitGap;
+                //By Alpha
+                op.display = opsDisplay
+                op.subScript?.parentAtom = op
+                op.subScript?.display = subScript
+                //By Alpha
             }
             opsDisplay.position = currentPosition;
             opsDisplay.range = op.indexRange;
