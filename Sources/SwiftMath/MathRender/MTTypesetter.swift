@@ -678,8 +678,8 @@ public class MTTypesetter {//By Alpha
                         //By Alpha
                         //displayRad?.degree?.mathList = rad.degree
                         degree?.mathList = rad.degree
-                        rad.degree?.display = degree
                         rad.degree?.parentAtom = rad
+                        rad.degree?.display = degree
                         //By alpha
                     }
                     //By Alpha
