@@ -677,6 +677,7 @@ public class MTTypesetter {//By Alpha
                         displayRad!.setDegree(degree, fontMetrics:styleFont.mathTable)
                         //By Alpha
                         //displayRad?.degree?.mathList = rad.degree
+                        degree?.mathList = rad.degree
                         rad.degree?.display = degree
                         rad.degree?.parentAtom = rad
                         //By alpha
