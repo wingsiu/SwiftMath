@@ -866,6 +866,11 @@ public class MTTypesetter {//By Alpha
                     //By Alpha
                     table?.display = display
                     display?.atom = table
+                    for i in 0..<(table?.numRows)! {
+                        for j in 0..<(table?.numColumns)! {
+                            table?.cells[i][j].parentAtom = table
+                        }
+                    }
                     //By Alpha
                     displayAtoms.append(display!)
                     currentPosition.x += display!.width
