@@ -673,7 +673,8 @@ public class MTTypesetter {//By Alpha
                     let displayRad = self.makeRadical(rad.radicand, range:rad.indexRange)
                     if rad.degree != nil {
                         // add the degree to the radical
-                        let degree = MTTypesetter.createLineForMathList(rad.degree, font:font, style:.scriptOfScript)
+                        //let degree = MTTypesetter.createLineForMathList(rad.degree, font:font, style:.scriptOfScript)
+                        let degree = MTTypesetter.createLineForMathList(rad.degree, font:font, style:.scriptOfScript, cramped: false)
                         //By Alpha
                         //displayRad?.degree?.mathList = rad.degree
                         degree?.mathList = rad.degree
