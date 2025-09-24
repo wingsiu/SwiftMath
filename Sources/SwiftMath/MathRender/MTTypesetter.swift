@@ -1926,7 +1926,7 @@ public class MTTypesetter {//By Alpha
                 colDisplays.append(disp!)
                 //By Alpha
                 disp?.mathList = row[i]
-                row[i].display = disp
+                table?.cells[j][i].display = disp
                 //By alpha
             }
             displays.append(colDisplays)
