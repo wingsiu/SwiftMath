@@ -548,9 +548,11 @@ public class MTTypesetter {//By Alpha
                         self.addDisplayLine()
                     }
                     let colorAtom = atom as! MTMathColor
-                    let display = MTTypesetter.createLineForMathList(colorAtom.innerList, font: font, style: style)
-                    display!.localTextColor = MTColor(fromHexString: colorAtom.colorString)
+                    //let display = MTTypesetter.createLineForMathList(colorAtom.innerList, font: font, style: style)
+                    //display!.localTextColor = MTColor(fromHexString: colorAtom.colorString)
                     //By Alpha
+                    let display = MTTypesetter.createLineForMathList(colorAtom.innerList, font: font, style: style, cramped: false)
+                    display!.localTextColor = MTColor(fromHexString: colorAtom.colorString)
                     display!.range = colorAtom.indexRange
                     var type = MTMathAtomType.ordinary
                     if let innerList = colorAtom.innerList, !innerList.atoms.isEmpty {
@@ -560,6 +562,10 @@ public class MTTypesetter {//By Alpha
                         colorLastAtomType = innerList.atoms.last!.type
                         
                     }
+                    display?.mathList = colorAtom.innerList
+                    colorAtom.display = display
+                    colorAtom.innerList?.display = display
+                    colorAtom.innerList?.parentAtom = colorAtom
                     if prevNode != nil {
                         let interElementSpace = self.getInterElementSpace(prevNode!.type, right: type )
                         if currentLine.length > 0 {
@@ -574,8 +580,7 @@ public class MTTypesetter {//By Alpha
                             currentPosition.x += interElementSpace
                         }
                     }
-                    display?.mathList = colorAtom.innerList
-                    colorAtom.display = display
+                    
                     //By Alpha
                     display!.position = currentPosition
                     currentPosition.x += display!.width
@@ -633,9 +638,11 @@ public class MTTypesetter {//By Alpha
                         self.addDisplayLine()
                     }
                     let colorboxAtom =  atom as! MTMathColorbox
-                    let display = MTTypesetter.createLineForMathList(colorboxAtom.innerList, font:font, style:style)
-                    display!.localBackgroundColor = MTColor(fromHexString: colorboxAtom.colorString)
+                    //let display = MTTypesetter.createLineForMathList(colorboxAtom.innerList, font:font, style:style)
+                    //display!.localBackgroundColor = MTColor(fromHexString: colorboxAtom.colorString)
                     //By Alpha
+                    let display = MTTypesetter.createLineForMathList(colorboxAtom.innerList, font: font, style: style, cramped: false)
+                    display!.localBackgroundColor = MTColor(fromHexString: colorboxAtom.colorString)
                     var type = MTMathAtomType.ordinary
                     if let innerList = colorboxAtom.innerList, !innerList.atoms.isEmpty {
                         if let firstNonStyleAtom = innerList.atoms.first(where: { $0.type != .style }) , firstNonStyleAtom.type != .radical , firstNonStyleAtom.type != .number,  firstNonStyleAtom.type != .variable , firstNonStyleAtom.type != .unaryOperator   {
@@ -644,6 +651,11 @@ public class MTTypesetter {//By Alpha
                         }
                         colorLastAtomType = innerList.atoms.last!.type
                     }
+                    display?.mathList = colorboxAtom.innerList
+                    colorboxAtom.display = display
+                    colorboxAtom.innerList?.display = display
+                    colorboxAtom.innerList?.parentAtom = colorboxAtom
+                
                     if prevNode != nil {
                         let interElementSpace = self.getInterElementSpace(prevNode!.type, right: type )
                         if currentLine.length > 0 {
