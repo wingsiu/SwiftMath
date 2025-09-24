@@ -640,7 +640,7 @@ public struct MTMathListBuilder {
             if let tb = (table as? MTInner)?.innerList?.atoms.first as? MTMathTable {
                 for i in 0..<(tb.numRows) {
                     for j in 0..<(tb.numColumns) {
-                        tb.cells[i][j].parentAtom = table
+                        tb.cells[i][j].parentAtom = tb
                         tb.cells[i][j].listType = .table
                         tb.cells[i][j].row = i
                         tb.cells[i][j].col = j

@@ -861,10 +861,10 @@ public class MTTypesetter {//By Alpha
                     
                     let table = atom as! MTMathTable?
                     let display = self.makeTable(table)
-                //By Alpha
-                table?.display = display
-                display?.atom = table
-                //By Alpha
+                    //By Alpha
+                    table?.display = display
+                    display?.atom = table
+                    //By Alpha
                     displayAtoms.append(display!)
                     currentPosition.x += display!.width
                     // A table doesn't have subscripts or superscripts
