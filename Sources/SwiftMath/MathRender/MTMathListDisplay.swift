@@ -141,6 +141,21 @@ public class MTDisplay:NSObject, EditorDisplay {
     var localBackgroundColor: MTColor?
     //By Alpha
     public weak var atom : MTMathAtom?
+//    public var minHeight:CGFloat
+//    public var caretHeight : CGFloat {
+//        return max(ascent+descent, minHeight)
+//    }
+//    init(font: MTFont?)
+//    {
+//        if let font = font {
+//            let ascent = CTFontGetAscent(font.ctFont)
+//            let descent = CTFontGetDescent(font.ctFont)
+//            let leading = CTFontGetLeading(font.ctFont)
+//            minHeight = ascent + descent + leading
+//        } else {
+//            minHeight = 0
+//        }
+//    }
     //By Alpha
     
     
@@ -176,6 +191,9 @@ public class MTCTLineDisplay : MTDisplay {
     public fileprivate(set) var atoms = [MTMathAtom]()
     
     init(withString attrString:NSAttributedString?, position:CGPoint, range:NSRange, font:MTFont?, atoms:[MTMathAtom]) {
+        //By alpha
+        //super.init(font: font)
+        //By Alpha
         super.init()
         self.position = position
         self.attributedString = attrString
@@ -238,6 +256,7 @@ public class MTCTLineDisplay : MTDisplay {
         context.restoreGState()
     }
     
+    
 }
 
 // MARK: - MTMathListDisplay
@@ -272,6 +291,7 @@ public class MTMathListDisplay : MTDisplay {
     //By Alpha
     
     init(withDisplays displays:[MTDisplay], range:NSRange) {
+        
         super.init()
         self.subDisplays = displays
         self.position = CGPoint.zero

@@ -587,10 +587,12 @@ public class MTTypesetter {//By Alpha
                         self.addDisplayLine()
                     }
                     let colorAtom = atom as! MTMathTextColor
-                    let display = MTTypesetter.createLineForMathList(colorAtom.innerList, font: font, style: style)
-                    display!.localTextColor = MTColor(fromHexString: colorAtom.colorString)
+//                    let display = MTTypesetter.createLineForMathList(colorAtom.innerList, font: font, style: style)
+//                    display!.localTextColor = MTColor(fromHexString: colorAtom.colorString)
                     //By Alpha
-                    var type = MTMathAtomType.ordinary
+                    let display = MTTypesetter.createLineForMathList(colorAtom.innerList, font: font, style: style, cramped: false)
+                    display!.localTextColor = MTColor(fromHexString: colorAtom.colorString)
+                                  var type = MTMathAtomType.ordinary
                     if let innerList = colorAtom.innerList, !innerList.atoms.isEmpty {
                         if let firstNonStyleAtom = innerList.atoms.first(where: { $0.type != .style }) , firstNonStyleAtom.type != .radical , firstNonStyleAtom.type != .number,  firstNonStyleAtom.type != .variable , firstNonStyleAtom.type != .unaryOperator{
                                 type = firstNonStyleAtom.type
