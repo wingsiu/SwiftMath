@@ -676,7 +676,7 @@ public class MTTypesetter {//By Alpha
                         let degree = MTTypesetter.createLineForMathList(rad.degree, font:font, style:.scriptOfScript)
                         displayRad!.setDegree(degree, fontMetrics:styleFont.mathTable)
                         //By Alpha
-                        displayRad?.degree?.mathList = rad.degree
+                        //displayRad?.degree?.mathList = rad.degree
                         rad.degree?.display = displayRad?.degree
                         rad.degree?.parentAtom = rad
                         //By alpha

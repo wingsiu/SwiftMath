@@ -503,7 +503,6 @@ public class MTRadicalDisplay : MTDisplay {//By Alpha
             kernBefore -= _radicalShift;
             _radicalShift = 0;
         }
-        
         // Note: position of degree is relative to parent.
         self.degree!.position = CGPointMake(self.position.x + kernBefore, self.position.y + raise);
         // Update the width by the _radicalShift
