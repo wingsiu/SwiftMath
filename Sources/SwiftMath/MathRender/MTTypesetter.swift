@@ -382,7 +382,9 @@ public class MTTypesetter {//By Alpha
                 finalizedList = mathList.finalized
             }}
         let listDisplay = self.createLineForMathList(finalizedList, font:font, style:style, cramped:false)
-        mathList?.display = listDisplay
+        finalizedList.display = listDisplay
+        listDisplay?.mathList = finalizedList
+        //mathList?.display = listDisplay
         return listDisplay
         //By Alpha
         // default is not cramped
@@ -1902,16 +1904,16 @@ public class MTTypesetter {//By Alpha
     }
     
     // Typeset every cell in the table. As a side-effect calculate the max column width of each column.
-    func typesetCells(_ table:inout MTMathTable?, columnWidths: inout [CGFloat]) -> [[MTDisplay]] {
+    func typesetCells(_ table: MTMathTable?, columnWidths: inout [CGFloat]) -> [[MTDisplay]] {
         var displays = [[MTDisplay]]()
-        for (j,row) in table!.cells.enumerated() {
+        for row in table!.cells {
             var colDisplays = [MTDisplay]()
             for i in 0..<row.count {
-                //let disp = MTTypesetter.createLineForMathList(row[i], font:font, style:style)
+                let disp = MTTypesetter.createLineForMathList(row[i], font:font, style:style)
                 //By Alpha
-                let finalized = row[i].finalized
-                table?.cells[j][i] = finalized
-                let disp = MTTypesetter.createLineForMathList(table?.cells[j][i], font:font, style:style, cramped: false)
+                //let finalized = row[i].finalized
+                //table?.cells[j][i] = finalized
+                //let disp = MTTypesetter.createLineForMathList(row[i], font:font, style:style, cramped: false)
                 //By Alpha
                 columnWidths[i] = max(disp!.width, columnWidths[i])
                 colDisplays.append(disp!)
