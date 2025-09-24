@@ -592,7 +592,7 @@ public class MTTypesetter {//By Alpha
                     //By Alpha
                     let display = MTTypesetter.createLineForMathList(colorAtom.innerList, font: font, style: style, cramped: false)
                     display!.localTextColor = MTColor(fromHexString: colorAtom.colorString)
-                                  var type = MTMathAtomType.ordinary
+                    var type = MTMathAtomType.ordinary
                     if let innerList = colorAtom.innerList, !innerList.atoms.isEmpty {
                         if let firstNonStyleAtom = innerList.atoms.first(where: { $0.type != .style }) , firstNonStyleAtom.type != .radical , firstNonStyleAtom.type != .number,  firstNonStyleAtom.type != .variable , firstNonStyleAtom.type != .unaryOperator{
                                 type = firstNonStyleAtom.type
@@ -891,7 +891,11 @@ public class MTTypesetter {//By Alpha
                     }
                     // add the fused atoms
                     if !atom.fusedAtoms.isEmpty {
-                        currentAtoms.append(contentsOf: atom.fusedAtoms)  //.addObjectsFromArray:atom.fusedAtoms)
+                        //currentAtoms.append(contentsOf: atom.fusedAtoms)
+                         //.addObjectsFromArray:atom.fusedAtoms)
+                        //By Alpha
+                        currentAtoms = currentAtoms + atom.fusedAtoms
+                        //By Alpha
                     } else {
                         currentAtoms.append(atom)
                     }
