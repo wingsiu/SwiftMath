@@ -601,6 +601,8 @@ public class MTTypesetter {//By Alpha
                     }
                     display?.mathList = colorAtom.innerList
                     colorAtom.display = display
+                    colorAtom.innerList?.display = display
+                    colorAtom.innerList?.parentAtom = colorAtom
                     //By Alpha
                     if prevNode != nil {
                         //By Alpha
