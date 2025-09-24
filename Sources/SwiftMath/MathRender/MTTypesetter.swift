@@ -774,7 +774,7 @@ public class MTTypesetter {//By Alpha
                     //By Alpha
                     display?.atom = inner
                     inner?.display = display
-                
+                    inner?.innerList?.parentAtom = inner
                     //By Alpha
                     display!.position = currentPosition
                     currentPosition.x += display!.width
@@ -1662,6 +1662,10 @@ public class MTTypesetter {//By Alpha
             position.x += rightGlyph!.width;
             innerElements.append(rightGlyph!)
         }
+        //By Alpha
+        inner?.innerList?.display = innerListDisplay
+        innerListDisplay?.mathList = inner?.innerList
+        //By Alpha
         let innerDisplay = MTMathListDisplay(withDisplays: innerElements, range: inner!.indexRange)
         return innerDisplay
     }
