@@ -1895,7 +1895,7 @@ public class MTTypesetter {//By Alpha
         let tableDisplay = MTMathListDisplay(withDisplays: rowDisplays, range: table!.indexRange)
         tableDisplay.position = currentPosition;
         //By Alpha
-        tableDisplay.range = table!.indexRange;
+        //tableDisplay.range = table!.indexRange;
         
         //By Alpha
         return tableDisplay;
