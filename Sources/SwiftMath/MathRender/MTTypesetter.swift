@@ -891,10 +891,10 @@ public class MTTypesetter {//By Alpha
                     }
                     // add the fused atoms
                     if !atom.fusedAtoms.isEmpty {
-                        //currentAtoms.append(contentsOf: atom.fusedAtoms)
+                        currentAtoms.append(contentsOf: atom.fusedAtoms)
                          //.addObjectsFromArray:atom.fusedAtoms)
                         //By Alpha
-                        currentAtoms = currentAtoms + atom.fusedAtoms
+                        //currentAtoms = currentAtoms + atom.fusedAtoms
                         //By Alpha
                     } else {
                         currentAtoms.append(atom)

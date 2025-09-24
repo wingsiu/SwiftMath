@@ -996,8 +996,8 @@ public class MTMathList : NSObject {
                 }
             case .number:
                 if prevNode != nil && prevNode!.type == .number && prevNode!.subScript == nil && prevNode!.superScript == nil {
-                    prevNode!.fuse(with: newNode)
-                    continue // skip the current node, we are done here.
+                    //prevNode!.fuse(with: newNode)
+                    //continue // skip the current node, we are done here.
                 }
             default: break
             }
