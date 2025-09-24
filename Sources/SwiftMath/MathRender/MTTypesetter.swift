@@ -1906,8 +1906,11 @@ public class MTTypesetter {//By Alpha
         //By Alpha
         for row in 0..<(table?.numRows ?? 0) {
             if let display = (tableDisplay.subDisplays[row] as? MTMathListDisplay) {
+                let x = display.position.x
+                let y = display.position.y
                 for col in 0..<(table?.numColumns ?? 0) {
                     table?.cells[row][col].display = display.subDisplays[col] as? MTMathListDisplay
+                    //table?.cells[row][col].display.position.x += x
                 }
             }
             

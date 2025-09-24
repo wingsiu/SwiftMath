@@ -646,7 +646,7 @@ public struct MTMathListBuilder {
                         tb.cells[i][j].col = j
                     }
                 }
-
+                (table as? MTInner)?.innerList?.listType = .inner
             }
             //By Alpha
             return table
