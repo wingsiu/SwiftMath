@@ -268,7 +268,7 @@ public class MTMathListDisplay : MTDisplay {
     public var index: Int = 0
     
     //By Alpha
-    public weak var mathList : MTMathList? = nil
+    public var mathList : MTMathList? = nil
     //By Alpha
     
     init(withDisplays displays:[MTDisplay], range:NSRange) {
@@ -503,6 +503,7 @@ public class MTRadicalDisplay : MTDisplay {//By Alpha
             kernBefore -= _radicalShift;
             _radicalShift = 0;
         }
+        
         // Note: position of degree is relative to parent.
         self.degree!.position = CGPointMake(self.position.x + kernBefore, self.position.y + raise);
         // Update the width by the _radicalShift
