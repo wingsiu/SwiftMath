@@ -1907,9 +1907,9 @@ public class MTTypesetter {//By Alpha
         for row in table!.cells {
             var colDisplays = [MTDisplay]()
             for i in 0..<row.count {
-                //let disp = MTTypesetter.createLineForMathList(row[i], font:font, style:style)
+                let disp = MTTypesetter.createLineForMathList(row[i], font:font, style:style)
                 //By Alpha
-                let disp = MTTypesetter.createLineForMathList(row[i], font:font, style:style, cramped: false)
+                //let disp = MTTypesetter.createLineForMathList(row[i], font:font, style:style, cramped: false)
                 //By Alpha
                 columnWidths[i] = max(disp!.width, columnWidths[i])
                 colDisplays.append(disp!)
