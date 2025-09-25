@@ -362,12 +362,12 @@ public struct MTMathListBuilder {
                         str += "\\textcolor{\(color)}{\(mathListToString(colorAtom.innerList))}"
                     }
                 } else if atom.type == .color {
-                    if let colorAtom = atom as? MTMathTextColor {
+                    if let colorAtom = atom as? MTMathColor {
                         let color = colorAtom.colorString
                         str += "\\color{\(color)}{\(mathListToString(colorAtom.innerList))}"
                     }
                 } else if atom.type == .colorBox {
-                    if let colorAtom = atom as? MTMathTextColor {
+                    if let colorAtom = atom as? MTMathColorbox {
                         let color = colorAtom.colorString
                         str += "\\colorbox{\(color)}{\(mathListToString(colorAtom.innerList))}"
                     }
