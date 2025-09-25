@@ -898,6 +898,11 @@ public class MTMathAtomFactory {
             let row = rows[i]
             for j in 0..<row.count {
                 table.set(cell: row[j], forRow: i, column: j)
+                //By Alpha
+                table.cells[i][j].listType = .table
+                table.cells[i][j].row = i
+                table.cells[i][j].col = j
+                //By Alpha
             }
         }
         
@@ -919,11 +924,7 @@ public class MTMathAtomFactory {
                 for i in 0..<table.cells.count {
                     for j in 0..<table.cells[i].count {
                         table.cells[i][j].insert(style, at: 0)
-                        //By Alpha
-                        table.cells[i][j].listType = .table
-                        table.cells[i][j].row = i
-                        table.cells[i][j].col = j
-                        //By Alpha
+                        
                     }
                 }
                 
