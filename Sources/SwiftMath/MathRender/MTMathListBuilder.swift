@@ -355,6 +355,14 @@ public struct MTMathListBuilder {
                     }
                     currentfontStyle = atom.fontStyle
                 }
+                //By Alpha
+                if atom.type == .textcolor {
+                    if let colorAtom = atom as? MTMathTextColor {
+                        let color = colorAtom.colorString
+                        str += "\\textcolor{\(color)}{\(mathListToString(colorAtom.innerList))}"
+                    }
+                }
+                //By Alpha
                 if atom.type == .fraction {
                     if let frac = atom as? MTFraction {
                         if frac.hasRule {
