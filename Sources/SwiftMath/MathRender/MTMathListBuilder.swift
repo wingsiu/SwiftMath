@@ -422,7 +422,10 @@ public struct MTMathListBuilder {
                             str += "{\(mathListToString(inner.innerList!))}"
                         }
                     }
-                } else if atom.type == .table {
+//                } else if atom.type == .table {
+//By Alpha
+                } else if atom.type == .table || (atom.type == .inner) {
+//By Alpha
                     if let table = atom as? MTMathTable {
                         if !table.environment.isEmpty {
                             str += "\\begin{\(table.environment)}"
