@@ -402,31 +402,11 @@ public struct MTMathListBuilder {
                         }
                         str += "{\(mathListToString(rad.radicand!))}"
                     }
-                } else if atom.type == .inner {
-                    if let inner = atom as? MTInner {
-                        if inner.leftBoundary != nil || inner.rightBoundary != nil {
-                            if inner.leftBoundary != nil {
-                                str += "\\left\(delimToString(delim: inner.leftBoundary!)) "
-                            } else {
-                                str += "\\left. "
-                            }
-                            
-                            str += mathListToString(inner.innerList!)
-                            
-                            if inner.rightBoundary != nil {
-                                str += "\\right\(delimToString(delim: inner.rightBoundary!)) "
-                            } else {
-                                str += "\\right. "
-                            }
-                        } else {
-                            str += "{\(mathListToString(inner.innerList!))}"
-                        }
-                    }
-//                } else if atom.type == .table {
-//By Alpha
-                } else if atom.type == .table || (atom.type == .inner) {
-//By Alpha
-                    if let table = atom as? MTMathTable {
+                    //                } else if atom.type == .table {
+                    //By Alpha
+                    //                } else if atom.type == .table || (atom.type == .inner) {
+                    //By Alpha
+                } else  if let table = atom as? MTMathTable {
                         if !table.environment.isEmpty {
                             str += "\\begin{\(table.environment)}"
                         }
@@ -458,6 +438,26 @@ public struct MTMathListBuilder {
                         }
                         if !table.environment.isEmpty {
                             str += "\\end{\(table.environment)}"
+                        }
+                   // }
+                } else if atom.type == .inner {
+                    if let inner = atom as? MTInner {
+                        if inner.leftBoundary != nil || inner.rightBoundary != nil {
+                            if inner.leftBoundary != nil {
+                                str += "\\left\(delimToString(delim: inner.leftBoundary!)) "
+                            } else {
+                                str += "\\left. "
+                            }
+                            
+                            str += mathListToString(inner.innerList!)
+                            
+                            if inner.rightBoundary != nil {
+                                str += "\\right\(delimToString(delim: inner.rightBoundary!)) "
+                            } else {
+                                str += "\\right. "
+                            }
+                        } else {
+                            str += "{\(mathListToString(inner.innerList!))}"
                         }
                     }
                 } else if atom.type == .overline {
