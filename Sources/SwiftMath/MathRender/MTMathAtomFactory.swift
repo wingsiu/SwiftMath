@@ -921,6 +921,8 @@ public class MTMathAtomFactory {
                         table.cells[i][j].insert(style, at: 0)
                         //By Alpha
                         table.cells[i][j].listType = .table
+                        table.cells[i][j].row = i
+                        table.cells[i][j].col = j
                         //By Alpha
                     }
                 }
