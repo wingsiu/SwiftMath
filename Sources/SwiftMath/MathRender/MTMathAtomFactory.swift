@@ -668,7 +668,7 @@ public class MTMathAtomFactory {
                 return MTMathAtom(type: .variable, value: chStr)
             }
             // skip non ascii characters and spaces
-            if isStyledCharacter(ch)  {
+           if isStyledCharacter(ch)  {
                 return MTMathAtom(type: .variable, value: chStr)
             }
             return nil //MTMathAtom(type: .variable, value: chStr)
@@ -677,134 +677,77 @@ public class MTMathAtomFactory {
         //By Alpha
     }
     
-//By Alpha
-   enum MTFontStyle {
-       case defaultStyle, roman, bold, italic, boldItalic, caligraphic, typewriter, sansSerif, fraktur, blackboard
-   }
-   struct UnicodeSymbol {
-       // Italic
-       static let capitalItalicStart: UInt32 = 0x1D434 // Mathematical Italic Capital A
-       static let lowerItalicStart: UInt32 = 0x1D44E   // Mathematical Italic Small a
-       static let greekCapitalItalicStart: UInt32 = 0x1D6E2 // Mathematical Italic Greek Capital Alpha
-       static let greekLowerItalicStart: UInt32 = 0x1D6FC // Mathematical Italic Greek Small Alpha
-       static let greekSymbolItalicStart: UInt32 = 0x1D6A4 // Mathematical Italic Greek Symbol Alpha (rarely used, see symbol mapping)
+    // This checks if a unicode scalar is in any math font style range
+    static func isStyledMathFont(_ unicode: UInt32) -> Bool {
+        // Italic
+        if (unicode >= UnicodeSymbol.capitalItalicStart && unicode < UnicodeSymbol.capitalItalicStart + 26)
+            || (unicode >= UnicodeSymbol.lowerItalicStart && unicode < UnicodeSymbol.lowerItalicStart + 26)
+            || (unicode >= UnicodeSymbol.greekCapitalItalicStart && unicode < UnicodeSymbol.greekCapitalItalicStart + 24)
+            || (unicode >= UnicodeSymbol.greekLowerItalicStart && unicode < UnicodeSymbol.greekLowerItalicStart + 25)
+            // Add greek symbols range if needed
+        {
+            return true
+        }
+        // Bold
+        if (unicode >= UnicodeSymbol.mathCapitalBoldStart && unicode < UnicodeSymbol.mathCapitalBoldStart + 26)
+            || (unicode >= UnicodeSymbol.mathLowerBoldStart && unicode < UnicodeSymbol.mathLowerBoldStart + 26)
+            || (unicode >= UnicodeSymbol.greekCapitalBoldStart && unicode < UnicodeSymbol.greekCapitalBoldStart + 24)
+            || (unicode >= UnicodeSymbol.greekLowerBoldStart && unicode < UnicodeSymbol.greekLowerBoldStart + 25)
+            // Add bold symbol/number ranges
+        {
+            return true
+        }
+        // Bold Italic
+        if (unicode >= UnicodeSymbol.mathCapitalBoldItalicStart && unicode < UnicodeSymbol.mathCapitalBoldItalicStart + 26)
+            || (unicode >= UnicodeSymbol.mathLowerBoldItalicStart && unicode < UnicodeSymbol.mathLowerBoldItalicStart + 26)
+            || (unicode >= UnicodeSymbol.greekCapitalBoldItalicStart && unicode < UnicodeSymbol.greekCapitalBoldItalicStart + 24)
+            || (unicode >= UnicodeSymbol.greekLowerBoldItalicStart && unicode < UnicodeSymbol.greekLowerBoldItalicStart + 25)
+            // Add bold italic symbol/number ranges
+        {
+            return true
+        }
+        // Caligraphic
+        if (unicode >= UnicodeSymbol.mathCapitalScriptStart && unicode < UnicodeSymbol.mathCapitalScriptStart + 26) {
+            return true
+        }
+        // Typewriter
+        if (unicode >= UnicodeSymbol.mathCapitalTTStart && unicode < UnicodeSymbol.mathCapitalTTStart + 26)
+            || (unicode >= UnicodeSymbol.mathLowerTTStart && unicode < UnicodeSymbol.mathLowerTTStart + 26)
+            || (unicode >= UnicodeSymbol.numberTTStart && unicode < UnicodeSymbol.numberTTStart + 10)
+        {
+            return true
+        }
+        // SansSerif
+        if (unicode >= UnicodeSymbol.mathCapitalSansSerifStart && unicode < UnicodeSymbol.mathCapitalSansSerifStart + 26)
+            || (unicode >= UnicodeSymbol.mathLowerSansSerifStart && unicode < UnicodeSymbol.mathLowerSansSerifStart + 26)
+            || (unicode >= UnicodeSymbol.numberSansSerifStart && unicode < UnicodeSymbol.numberSansSerifStart + 10)
+        {
+            return true
+        }
+        // Fraktur
+        if (unicode >= UnicodeSymbol.mathCapitalFrakturStart && unicode < UnicodeSymbol.mathCapitalFrakturStart + 26)
+            || (unicode >= UnicodeSymbol.mathLowerFrakturStart && unicode < UnicodeSymbol.mathLowerFrakturStart + 26)
+        {
+            return true
+        }
+        // Blackboard
+        if (unicode >= UnicodeSymbol.mathCapitalBlackboardStart && unicode < UnicodeSymbol.mathCapitalBlackboardStart + 26)
+            || (unicode >= UnicodeSymbol.mathLowerBlackboardStart && unicode < UnicodeSymbol.mathLowerBlackboardStart + 26)
+            || (unicode >= UnicodeSymbol.numberBlackboardStart && unicode < UnicodeSymbol.numberBlackboardStart + 10)
+        {
+            return true
+        }
+        return false
+    }
 
-       // Bold
-       static let mathCapitalBoldStart: UInt32 = 0x1D400 // Mathematical Bold Capital A
-       static let mathLowerBoldStart: UInt32 = 0x1D41A   // Mathematical Bold Small a
-       static let greekCapitalBoldStart: UInt32 = 0x1D6A8 // Mathematical Bold Greek Capital Alpha
-       static let greekLowerBoldStart: UInt32 = 0x1D6C2   // Mathematical Bold Greek Small Alpha
-       static let greekSymbolBoldStart: UInt32 = 0x1D6A4  // (This overlaps with italic symbols in some fonts, check your mapping)
-       static let numberBoldStart: UInt32 = 0x1D7CE       // Mathematical Bold Digit Zero
-
-       // Bold Italic
-       static let mathCapitalBoldItalicStart: UInt32 = 0x1D468 // Mathematical Bold Italic Capital A
-       static let mathLowerBoldItalicStart: UInt32 = 0x1D482   // Mathematical Bold Italic Small a
-       static let greekCapitalBoldItalicStart: UInt32 = 0x1D71C // Mathematical Bold Italic Greek Capital Alpha
-       static let greekLowerBoldItalicStart: UInt32 = 0x1D736   // Mathematical Bold Italic Greek Small Alpha
-       static let greekSymbolBoldItalicStart: UInt32 = 0x1D7CA  // (symbols mapping required)
-
-       // Script (Caligraphic)
-       static let mathCapitalScriptStart: UInt32 = 0x1D49C // Mathematical Script Capital A
-
-       // Typewriter (Monospace)
-       static let mathCapitalTTStart: UInt32 = 0x1D670 // Mathematical Monospace Capital A
-       static let mathLowerTTStart: UInt32 = 0x1D68A   // Mathematical Monospace Small a
-       static let numberTTStart: UInt32 = 0x1D7F6      // Mathematical Monospace Digit Zero
-
-       // Sans Serif
-       static let mathCapitalSansSerifStart: UInt32 = 0x1D5A0 // Mathematical Sans-Serif Capital A
-       static let mathLowerSansSerifStart: UInt32 = 0x1D5BA   // Mathematical Sans-Serif Small a
-       static let numberSansSerifStart: UInt32 = 0x1D7E2      // Mathematical Sans-Serif Digit Zero
-
-       // Fraktur
-       static let mathCapitalFrakturStart: UInt32 = 0x1D504 // Mathematical Fraktur Capital A
-       static let mathLowerFrakturStart: UInt32 = 0x1D51E   // Mathematical Fraktur Small a
-
-       // Blackboard (Double-Struck)
-       static let mathCapitalBlackboardStart: UInt32 = 0x1D538 // Mathematical Double-Struck Capital A
-       static let mathLowerBlackboardStart: UInt32 = 0x1D552   // Mathematical Double-Struck Small a
-       static let numberBlackboardStart: UInt32 = 0x1D7D8      // Mathematical Double-Struck Digit Zero
-
-       // Special constants
-       static let planksConstant: UInt32 = 0x210E // ℎ (Planck constant, used as italic h)
-
-       // Greek base starts (for offset calculations)
-       static let capitalGreekStart: UInt32 = 0x0391 // Greek Capital Alpha
-       static let lowerGreekStart: UInt32 = 0x03B1   // Greek Small Alpha
-   }
-
-   // This checks if a unicode scalar is in any math font style range
-   static func isStyledMathFont(_ unicode: UInt32) -> Bool {
-       // Italic
-       if (unicode >= UnicodeSymbol.capitalItalicStart && unicode < UnicodeSymbol.capitalItalicStart + 26)
-           || (unicode >= UnicodeSymbol.lowerItalicStart && unicode < UnicodeSymbol.lowerItalicStart + 26)
-           || (unicode >= UnicodeSymbol.greekCapitalItalicStart && unicode < UnicodeSymbol.greekCapitalItalicStart + 24)
-           || (unicode >= UnicodeSymbol.greekLowerItalicStart && unicode < UnicodeSymbol.greekLowerItalicStart + 25)
-           // Add greek symbols range if needed
-       {
-           return true
-       }
-       // Bold
-       if (unicode >= UnicodeSymbol.mathCapitalBoldStart && unicode < UnicodeSymbol.mathCapitalBoldStart + 26)
-           || (unicode >= UnicodeSymbol.mathLowerBoldStart && unicode < UnicodeSymbol.mathLowerBoldStart + 26)
-           || (unicode >= UnicodeSymbol.greekCapitalBoldStart && unicode < UnicodeSymbol.greekCapitalBoldStart + 24)
-           || (unicode >= UnicodeSymbol.greekLowerBoldStart && unicode < UnicodeSymbol.greekLowerBoldStart + 25)
-           // Add bold symbol/number ranges
-       {
-           return true
-       }
-       // Bold Italic
-       if (unicode >= UnicodeSymbol.mathCapitalBoldItalicStart && unicode < UnicodeSymbol.mathCapitalBoldItalicStart + 26)
-           || (unicode >= UnicodeSymbol.mathLowerBoldItalicStart && unicode < UnicodeSymbol.mathLowerBoldItalicStart + 26)
-           || (unicode >= UnicodeSymbol.greekCapitalBoldItalicStart && unicode < UnicodeSymbol.greekCapitalBoldItalicStart + 24)
-           || (unicode >= UnicodeSymbol.greekLowerBoldItalicStart && unicode < UnicodeSymbol.greekLowerBoldItalicStart + 25)
-           // Add bold italic symbol/number ranges
-       {
-           return true
-       }
-       // Caligraphic
-       if (unicode >= UnicodeSymbol.mathCapitalScriptStart && unicode < UnicodeSymbol.mathCapitalScriptStart + 26) {
-           return true
-       }
-       // Typewriter
-       if (unicode >= UnicodeSymbol.mathCapitalTTStart && unicode < UnicodeSymbol.mathCapitalTTStart + 26)
-           || (unicode >= UnicodeSymbol.mathLowerTTStart && unicode < UnicodeSymbol.mathLowerTTStart + 26)
-           || (unicode >= UnicodeSymbol.numberTTStart && unicode < UnicodeSymbol.numberTTStart + 10)
-       {
-           return true
-       }
-       // SansSerif
-       if (unicode >= UnicodeSymbol.mathCapitalSansSerifStart && unicode < UnicodeSymbol.mathCapitalSansSerifStart + 26)
-           || (unicode >= UnicodeSymbol.mathLowerSansSerifStart && unicode < UnicodeSymbol.mathLowerSansSerifStart + 26)
-           || (unicode >= UnicodeSymbol.numberSansSerifStart && unicode < UnicodeSymbol.numberSansSerifStart + 10)
-       {
-           return true
-       }
-       // Fraktur
-       if (unicode >= UnicodeSymbol.mathCapitalFrakturStart && unicode < UnicodeSymbol.mathCapitalFrakturStart + 26)
-           || (unicode >= UnicodeSymbol.mathLowerFrakturStart && unicode < UnicodeSymbol.mathLowerFrakturStart + 26)
-       {
-           return true
-       }
-       // Blackboard
-       if (unicode >= UnicodeSymbol.mathCapitalBlackboardStart && unicode < UnicodeSymbol.mathCapitalBlackboardStart + 26)
-           || (unicode >= UnicodeSymbol.mathLowerBlackboardStart && unicode < UnicodeSymbol.mathLowerBlackboardStart + 26)
-           || (unicode >= UnicodeSymbol.numberBlackboardStart && unicode < UnicodeSymbol.numberBlackboardStart + 10)
-       {
-           return true
-       }
-       return false
-   }
-
-   // Usage example:
-   static func isStyledCharacter(_ ch: Character) -> Bool {
-       for scalar in ch.unicodeScalars {
-           if isStyledMathFont(scalar.value) { return true }
-       }
-       return false
-   }
- //By Alpha
+    // Usage example:
+    static func isStyledCharacter(_ ch: Character) -> Bool {
+        for scalar in ch.unicodeScalars {
+            if isStyledMathFont(scalar.value) { return true }
+        }
+        return false
+    }
+    
     /** Returns a `MTMathList` with one atom per character in the given string. This function
      does not do any LaTeX conversion or interpretation. It simply uses `atom(forCharacter:)` to
      convert the characters to atoms. Any character that cannot be converted is ignored. */
