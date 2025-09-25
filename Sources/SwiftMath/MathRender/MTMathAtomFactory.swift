@@ -1021,6 +1021,9 @@ public class MTMathAtomFactory {
                 let space = Self.atom(forLatexSymbol: ",")!
                 
                 inner.innerList = MTMathList(atoms: [space, table])
+                //By Alpha
+                inner.innerList?.listType = .inner
+                //By Alpha
                 
                 return inner
             } else {
