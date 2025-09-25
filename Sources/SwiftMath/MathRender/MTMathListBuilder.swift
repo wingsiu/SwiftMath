@@ -361,7 +361,18 @@ public struct MTMathListBuilder {
                         let color = colorAtom.colorString
                         str += "\\textcolor{\(color)}{\(mathListToString(colorAtom.innerList))}"
                     }
-                }
+                } else if atom.type == .color {
+                    if let colorAtom = atom as? MTMathTextColor {
+                        let color = colorAtom.colorString
+                        str += "\\color{\(color)}{\(mathListToString(colorAtom.innerList))}"
+                    }
+                } else if atom.type == .colorBox {
+                    if let colorAtom = atom as? MTMathTextColor {
+                        let color = colorAtom.colorString
+                        str += "\\colorbox{\(color)}{\(mathListToString(colorAtom.innerList))}"
+                    }
+                } else
+
                 //By Alpha
                 if atom.type == .fraction {
                     if let frac = atom as? MTFraction {
