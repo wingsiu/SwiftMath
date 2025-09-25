@@ -668,7 +668,7 @@ public class MTMathAtomFactory {
                 return MTMathAtom(type: .variable, value: chStr)
             }
             // skip non ascii characters and spaces
-            return nil
+            return MTMathAtom(type: .variable, value: chStr)
         }
         
         //By Alpha

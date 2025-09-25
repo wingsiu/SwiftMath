@@ -490,7 +490,7 @@ public struct MTMathListBuilder {
                     if let command = MTMathAtomFactory.latexSymbolName(for: atom) {
                         str += "\\\(command) "
                     } else {
-                        str += "\(String(atom.nucleus))"
+                        str += "\(String(atom.nucleus))" //By Alpha
                     }
                 }
                 
