@@ -919,6 +919,9 @@ public class MTMathAtomFactory {
                 for i in 0..<table.cells.count {
                     for j in 0..<table.cells[i].count {
                         table.cells[i][j].insert(style, at: 0)
+                        //By Alpha
+                        table.cells[i][j].listType = .table
+                        //By Alpha
                     }
                 }
                 
