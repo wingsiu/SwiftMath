@@ -415,8 +415,9 @@ public struct MTMathListBuilder {
                             let row = table.cells[i]
                             for j in 0..<row.count {
                                 let cell = row[j]
-                                if table.environment == "matrix" {
-                                    if cell.atoms.count >= 1 && cell.atoms[0].type == .style {
+                                //if table.environment == "matrix"  {
+                                if table.environment == "matrix" || table.environment == "cases"  { //By Alpha
+                                      if cell.atoms.count >= 1 && cell.atoms[0].type == .style {
                                         // remove first atom
                                         cell.atoms.removeFirst()
                                     }
