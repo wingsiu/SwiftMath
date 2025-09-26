@@ -458,12 +458,14 @@ public struct MTMathListBuilder {
                             }//By Alpha
                             
                             str += mathListToString(inner.innerList!)
+                            if  env != "cases" {//By Alpha
+                                if inner.rightBoundary != nil {
+                                    str += "\\right\(delimToString(delim: inner.rightBoundary!)) "
+                                } else {
+                                    str += "\\right. "
+                                }
+                            }//By Alpha
                             
-                            if inner.rightBoundary != nil {
-                                str += "\\right\(delimToString(delim: inner.rightBoundary!)) "
-                            } else {
-                                str += "\\right. "
-                            }
                         } else {
                             str += "{\(mathListToString(inner.innerList!))}"
                         }
