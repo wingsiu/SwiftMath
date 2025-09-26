@@ -446,7 +446,7 @@ public struct MTMathListBuilder {
                         if inner.leftBoundary != nil || inner.rightBoundary != nil {
                             //By Alpha
                             var env = ""
-                            if let envName = (inner.innerList?.atoms[1] as? MTMathTable)?.environment {
+                            if let envName = (inner.innerList?.atoms.last as? MTMathTable)?.environment {
                                 env = envName
                             }
                             //By Alpha
