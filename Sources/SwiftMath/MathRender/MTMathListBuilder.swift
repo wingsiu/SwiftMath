@@ -443,11 +443,19 @@ public struct MTMathListBuilder {
                 } else if atom.type == .inner {
                     if let inner = atom as? MTInner {
                         if inner.leftBoundary != nil || inner.rightBoundary != nil {
-                            if inner.leftBoundary != nil {
-                                str += "\\left\(delimToString(delim: inner.leftBoundary!)) "
-                            } else {
-                                str += "\\left. "
+                            //By Alpha
+                            var env = ""
+                            if let envName = (inner.innerList?.atoms[1] as? MTMathTable)?.environment {
+                                env = envName
                             }
+                            //By Alpha
+                            if  env != "cases" {//By Alpha
+                                if inner.leftBoundary != nil {
+                                    str += "\\left\(delimToString(delim: inner.leftBoundary!)) "
+                                } else {
+                                    str += "\\left. "
+                                }
+                            }//By Alpha
                             
                             str += mathListToString(inner.innerList!)
                             
